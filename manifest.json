@@ -1,0 +1,16 @@
+{
+    "manifest_version": 2,
+   
+    "name": "Spat_nav_evaluatior",
+    "description": "evaluator for spatial navagiation",
+    "version": "1.0",
+    "devtools_page": "spat_nav.html",
+
+    "browser_action": {
+      "default_icon": "icon.png",
+      "default_popup": "popup.html"
+    },
+    "permissions": [
+      "activeTab"
+    ]
+  }
