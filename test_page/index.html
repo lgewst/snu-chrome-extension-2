@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base target="_blank">
+  <title>Spatial Navigation Demo Collection</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+  <link rel="stylesheet" href="style.css">
+  <!-- 폴리필코드를 명시적으로 실행하려면 아래 줄을 주석해제.  -->
+  <!-- <script src="polyfill/spatnav-heuristic.js"></script> -->
+  <script type="text/javascript">
+    window.addEventListener("load", function() {
+      let loopingBox1 = document.getElementById('looping-first');
+      let loopingBox3 = document.getElementById('looping-third');
+
+      loopingBox3.addEventListener("focus", () => {
+        loopingBox1.focus();
+      })
+    });
+    let onClick = () => {
+      alert("onClick");
+    }
+
+  </script>
+</head>
+
+<body>
+  <div class="basic-padding">
+    <p>#11 Error</p>
+
+    <div class="card-view gold">
+      <h2 tabIndex="0" id="intro">1. Unreachable Case</h2>
+
+      Error 1.
+      <div style="width: 700px; display: flex;">
+        <p><a tabindex="0">link</a>bla bla bla bla blabla blabla blabla blabla blabla blabla blabla bla bla <a tabindex="0">long~~~~ link</a> blabla blabla blabla blabla bla bla blabla blabla blabla blabla labla <a tabindex="0">long~~~~ link</a>bla bla bla <a tabindex="0">Unreachable~~~~ link</a></p>
+        <div style="width: 150px;">
+          <div class="small-box" tabindex="0"></div>
+        </div>
+      </div>
+
+      Error 2.
+      <div style="position: relative; text-align: center; padding: 20px;">
+        <div tabindex="0" style="width: 200px; height: 200px; border:1px solid black"></div>
+        <div tabindex="0" style="position: absolute; top: 50px; left: 30px; width: 100px; height: 100px; background: darkgray">Unreachable element</div>
+      </div><br>
+
+
+      Error 3.
+      <div style="position: relative; padding: 20px;">
+        <div tabindex="0" class="small-box"></div>
+        <div tabindex="0" class="small-box" style="margin-left:200px;"></div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div tabindex="0" class="small-box"></div>
+        <div tabindex="0" class="small-box" style="margin-left:200px;"></div>
+        <div tabindex="0" class="small-box" style="position: absolute; top: 140px; left: 170px; width: 100px; height: 50px; background: darkgray">Unreachable element</div>
+      </div><br>
+
+
+      Error 4.
+
+      <div style="position: relative; text-align: center; padding: 20px;">
+        <div class="small-box" tabindex="0" style="position: absolute; top: 50px; left: 30px; background: white"></div>
+        <div class="small-box" tabindex="0" style="position: absolute; top: 80px; left: 80px; background: white"></div>
+        <div class="small-box" tabindex="0" style="position: absolute; top: 150px; left: 130px; background: white"></div>
+        <div class="small-box" tabindex="0" style="position: absolute; top: 150px; left: 30px; background: darkgray">Unreachable element</div>
+      </div><br>
+      <br><br><br><br><br>
+      <br><br><br><br><br>
+    </div>
+
+    <div class="card-view gold">
+      <h2 tabIndex="0" id="intro">3. Trap </h2>
+      <a target="_blank" href="./trapped.html"> Open trap case </a>
+
+    </div>
+    <div class="card-view gold">
+      <h2 tabIndex="0" id="intro">3. Looping </h2>
+      <div class="small-box looping" tabindex="0" style="background: white"></div>
+      <div class="small-box looping" tabindex="0" style="background: gray"></div>
+      <br><br><br><br><br><br><br><br>
+      <div class="small-box" id="looping-first" tabindex="0" style="background: white"></div>
+      <div class="small-box" tabindex="0" style="background: gray"></div>
+      <div class="small-box" id="looping-third" tabindex="0" style="background: white">This box passes focus to the first box.</div>
+
+    </div>
+    <div class="card-view gold">
+      <h2 tabIndex="0" id="intro">4. Non-focusable button</h2>
+      <div class="small-box" onClick="onClick()">Mouse Click</div>
+    </div>
+
+    <div class="card-view gold">
+      <h2 tabIndex="0" id="intro">5. Unclear Focus ring</h2>
+      <div class="small-box2" tabindex="0">Error 1</div>
+      <br><br>
+      <div class="small-box" tabindex="0" style="background: black; color:white;">Error 2</div>
+      <br><br>
+      <div class="small-box" tabindex="0" style="background: blue; color:white;">Error 3</div>
+      <br><br>
+      <div class="small-box3" tabindex="0">OK</div>
+    </div>
+
+
+    <br>
+    <br>
+  </div>
+</body>
+</html>

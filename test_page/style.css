@@ -1,0 +1,128 @@
+body {
+  font-family: Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  word-break: break-word;
+}
+
+:focus {
+  outline: 2px solid blue;
+}
+
+a {
+  color: #0049bf;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* style for common */
+.text-align {
+  text-align: center;
+}
+
+.basic-padding{
+  padding : 20px;
+}
+
+.flex-box {
+  display: flex;
+}
+
+.card-view {
+    margin-top : 50px;
+    margin-left: 20px;
+    padding: 20px 30px;
+    padding-right: 0;
+    background: white;
+    border: 1px solid lightgray;
+    border-left: 15px solid #f44336;
+    max-width: 850px;
+     -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
+}
+
+.small-box {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  border: 1px solid black;
+}
+
+.big-box{
+  width: 100px;
+  height: 30px;
+  border: 1px solid black;
+}
+
+.small-box2 {
+  width: 100px;
+  height: 100px;
+  outline: 3px solid blue;
+}
+
+.small-box3 {
+  width: 100px;
+  height: 100px;
+  outline: 3px solid blue;
+}
+
+.small-box3:focus {
+  outline: 3px solid red;
+}
+
+.looping {
+  position: absolute;
+  left: 0;
+  -webkit-transition: left 1s; /* For Safari 3.1 to 6.0 */
+  transition: left 1s;
+  margin-left: 90px
+}
+
+.looping:focus {
+  position: absolute;
+  left: 200px;
+}
+
+.flex-box {
+    border: 5px solid #F4F7F8;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    overflow: scroll;
+    box-sizing: border-box;
+}
+
+ul {
+list-style:none;
+  padding:0;
+  margin:auto;
+}
+
+.list-header {
+    background: #B8C1C8;
+    border-bottom: 1px solid #989EA4;
+    border-top: 1px solid #717D85;
+    color: #FFF;
+    font: bold 18px/21px Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 2px 0 0 12px;
+    position: -webkit-sticky;
+    position: sticky;
+    width: 100%;
+    top: 0px;
+}
+
+li {
+    font: bold 20px/45px Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0 0 0 12px;
+    white-space: nowrap;
+}
+
+li + li {
+    border-top: 1px solid #CCC
+}
