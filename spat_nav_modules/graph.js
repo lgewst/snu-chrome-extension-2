@@ -95,11 +95,11 @@ function make_reversed_directed_graph(directed_graph){
 
       var former_destination = directed_graph[i][j];
 
-      if (former_destination in reversed_directed_graph){ // check whether former_destination is aleady in the starting node list.
-        reversed_directed_graph[former_destination].push(former_origin) // If so, push former_origin to the destination.
+      if (former_destination.id in reversed_directed_graph){ // check whether former_destination is aleady in the starting node list.
+        reversed_directed_graph[former_destination.id].push(former_origin) // If so, push former_origin to the destination.
       }
       else {
-        reversed_directed_graph[former_destination] = [former_origin]; // If not, create a new list with it.
+        reversed_directed_graph[former_destination.id] = [former_origin]; // If not, create a new list with it.
       }
     }
   }
