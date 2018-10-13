@@ -7,6 +7,8 @@
 3. graph.js 전체 코드를 복사한다.
 4. 
 
+콘솔창에 다음을 쳐서 결과값을 확인한다.
+
 var graph = make_data_structure();
 var res = make_directed_graph(graph);
 var rev = make_reversed_directed_graph(res);
