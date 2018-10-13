@@ -106,7 +106,7 @@ function make_reversed_directed_graph(directed_graph){
 // ex> reverse_graph_list[10][1:] = all destination nodes list
 
 
-  var reversed_directed_graph = [];
+  var reversed_graph_list = [];
 
   for(var i = 0; i < directed_graph.length; i++){
 
@@ -114,15 +114,15 @@ function make_reversed_directed_graph(directed_graph){
 
     for(var j=1; j< directed_graph[i].length; j++){
       var former_destination = directed_graph[i][j];
-      reverse_graph_list = insert_node_in_directed_graph(former_destination, former_starting_node, reversed_directed_graph)
+      var reverse_graph_list = insert_node_in_directed_graph(former_destination, former_starting_node, reversed_graph_list)
     }
   }
 
   var reversed_directed_graph_without_redundancy = []
   // redundancy must be removed in destination list of each starting node.
-  for(var k=0; k< reversed_directed_graph.length; k++){
+  for(var k=0; k< reversed_graph_list.length; k++){
     var element = [reverse_graph_list[k][0]]
-    element = element.concat( remove_redundancy_in_array(reverse_graph_list[k].slice(1,reverse_graph_list[k].length)));
+    element = element.concat(remove_redundancy_in_array(reverse_graph_list[k].slice(1,reverse_graph_list[k].length)));
     reversed_directed_graph_without_redundancy.push(element)
   }
 
