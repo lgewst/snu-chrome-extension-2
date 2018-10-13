@@ -72,3 +72,36 @@ function make_directed_graph(arrow_graph){
   }
   return directed_graph;
 }
+
+/* A fuction that makes a  reversed directed graph in the form of {key,value} list
+ *
+ * Row
+ * Length of the number of focusble element.
+ *
+ * Column
+ * Nodes | origin | [destinations]
+ *
+ */
+
+function make_reversed_directed_graph(directed_graph){
+
+  var reversed_directed_graph = {}; // A Dicitionary containing starting node as a key and destination nodes as a list
+
+  for(var i = 0; i < directed_graph.length; i++){
+
+    var former_origin = directed_graph[i][0];
+
+    for(var j=1; j< directed_graph[i].length; j++){
+
+      var former_destination = directed_graph[i][j];
+
+      if (former_destination in reversed_directed_graph){ // check whether former_destination is aleady in the starting node list.
+        reversed_directed_graph[former_destination].push(former_origin) // If so, push former_origin to the destination.
+      }
+      else {
+        reversed_directed_graph[former_destination] = [former_origin]; // If not, create a new list with it.
+      }
+    }
+  }
+  return reversed_directed_graph;
+}
