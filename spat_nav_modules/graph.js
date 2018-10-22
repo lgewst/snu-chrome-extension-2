@@ -10,19 +10,22 @@
  * Nodes | origin | up | down | left | right |
  *
  */
+var node_num;
 
 function make_data_structure(){
-    var focusable = document.body.focusableAreas({'mode': 'all'});
-    var graph = new Array(focusable.length);
+    var focusable = document.body.focusableAreas({'mode': 'visible'});
+    node_num = focusable.length;
+    var graph = new Array(node_num);
     var dir = ["up", "down", "left", "right"];
 
-    for(var i = 0; i < focusable.length; i++){
-        graph[i] = new Array(5);
-        graph[i][0] = focusable[i];
+    for(var i = 0; i < node_num; i++){
+      focusable[i].node_id = i
+      graph[i] = new Array(5);
+      graph[i][0] = focusable[i];
 
-        for(var j = 0; j < dir.length; j++){
-            graph[i][j+1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[j]);
-        }
+      for(var j = 0; j < dir.length; j++){
+          graph[i][j+1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[j]);
+      }
     }
     return graph;
 }
@@ -105,8 +108,11 @@ function make_reversed_directed_graph(directed_graph){
 // ex> reverse_graph_list[10][0] = starting node
 // ex> reverse_graph_list[10][1:] = all destination nodes list
 
-
   var reversed_graph_list = [];
+
+  for (var i = 0; i < directed_graph.length; i++){
+    reversed_graph_list.push([directed_graph[i][0]]);
+  }
 
   for(var i = 0; i < directed_graph.length; i++){
 
@@ -130,3 +136,53 @@ function make_reversed_directed_graph(directed_graph){
 }
 
 var graph = make_data_structure(); var res = make_directed_graph(graph); var rev = make_reversed_directed_graph(res);
+
+/*
+ * SCC(Strong Conected Component) with DFS
+ * 
+ */
+
+var scc = [];
+var visited = new Array(node_num).fill(0);
+var stack = [];
+
+function make_scc(){
+  for(var node_id = 0; node_id < node_num; node_id++){
+    if(!visited[node_id]){
+      front_dfs(node_id);
+    }
+  }
+
+  visited.fill(0);
+  while(stack.length){
+    var node_id = stack.pop();
+    if(!visited[node_id]){
+      scc.push([]);
+      rev_dfs(node_id)
+    }
+  }
+}
+
+function front_dfs(node_id){
+  visited[node_id] = 1;
+  for(var i = 1; i < res[node_id].length; i++){
+    var next_node_id = res[node_id][i].node_id;
+    if(!visited[next_node_id]){
+      front_dfs(next_node_id);
+    }
+  }
+  stack.push(node_id);
+}
+
+function rev_dfs(node_id){
+  visited[node_id] = 1;
+  scc[scc.length-1].push(rev[node_id][0]);
+  for(var i = 1; i < rev[node_id].length; i++){
+    var next_node_id = rev[node_id][i].node_id;
+    if(!visited[next_node_id]){
+      rev_dfs(next_node_id)
+    }
+  }
+}
+
+make_scc();
