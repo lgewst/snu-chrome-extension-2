@@ -13,7 +13,7 @@
 var node_num;
 
 function make_data_structure(){
-    var focusable = document.body.focusableAreas({'mode': 'visible'});
+    var focusable = document.body.focusableAreas({'mode': 'all'});
     node_num = focusable.length;
     var graph = new Array(node_num);
     var dir = ["up", "down", "left", "right"];
@@ -158,9 +158,12 @@ function make_scc(){
     var node_id = stack.pop();
     if(!visited[node_id]){
       scc.push([]);
+      scc[scc.length-1].push([]);
       rev_dfs(node_id)
     }
   }
+
+  condensation();
 }
 
 function front_dfs(node_id){
@@ -176,6 +179,7 @@ function front_dfs(node_id){
 
 function rev_dfs(node_id){
   visited[node_id] = 1;
+  res[node_id].scc_id = scc.length-1;
   scc[scc.length-1].push(rev[node_id][0]);
   for(var i = 1; i < rev[node_id].length; i++){
     var next_node_id = rev[node_id][i].node_id;
@@ -185,4 +189,33 @@ function rev_dfs(node_id){
   }
 }
 
+function condensation(){
+  var tmp = [];
+  for(var i = 0; i < scc.length; i++){
+    tmp.length = 0;
+    for(var j = 1; j < scc[i].length; j++){
+      var node = scc[i][j];
+      var o_arrow_num = res[node.node_id].length;
+      for(var k = 1; k < o_arrow_num; k++){
+        var o_node = res[node.node_id][k].node_id
+        if(res[o_node].scc_id != res[node.node_id].scc_id) tmp.push(res[o_node].scc_id);
+      }
+    }
+    $.each(tmp, function(key, value){
+      if($.inArray(value, scc[i][0]) === -1) scc[i][0].push(value);
+    })
+  }
+}
+
+function trap_detector(){
+  for(var i = 0; i < scc.length; i++){
+    if(!scc[i][0].length){
+      for(var j = 1; j < scc[i].length; j++){
+        alert(scc[i][j].node_id);
+      }
+    }
+  }
+}
+
 make_scc();
+trap_detector();
