@@ -208,11 +208,16 @@ function condensation(){
 }
 
 function trap_detector(){
+	if(scc.length == 1) return;
+
   for(var i = 0; i < scc.length; i++){
     if(!scc[i][0].length){
       for(var j = 1; j < scc[i].length; j++){
 	      scc[i][j].style.backgroundColor = "#FDFF47"
-	      //scc[i][j].style.color = "#47e0ff"
+	      scc[i][j].style.color = "#47e0ff"
+	      scc[i][j].style.borderColor = "yellow"
+	      scc[i][j].style.borderStyle = "dotted"
+	      scc[i][j].style.borderWidth = "1"
       }
     }
   }

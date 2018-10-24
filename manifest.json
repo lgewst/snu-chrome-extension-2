@@ -14,7 +14,7 @@
     },
     "content_scripts": [
     {
-      "matches": ["https://www.wikipedia.org/*","file:///home/stargazer/snu-chrome-extension-2/test_page/trapped.html","file:///home/stargazer/snu-chrome-extension-2/test_page/index.html"],
+      "matches": ["http://*/*", "https://*/*", "file:///*"],
       "js": ["spatnav-heuristic.js","jquery-3.3.1.min.js","spat_nav_modules/graph.js"]
     }
      ],
