@@ -5,13 +5,16 @@
     "description": "evaluator for spatial navagiation",
     "version": "2.0",
     "devtools_page": "spat_nav.html",
-
+    "background": {
+       "scripts": ["background.js"],
+       "persistent": false
+    },
     "browser_action": {
       "default_icon": "icon.png"
     },
     "content_scripts": [
     {
-      "matches": ["https://www.wikipedia.org/*"],
+      "matches": ["https://www.wikipedia.org/*","file:///home/stargazer/snu-chrome-extension-2/test_page/trapped.html","file:///home/stargazer/snu-chrome-extension-2/test_page/index.html"],
       "js": ["spatnav-heuristic.js","jquery-3.3.1.min.js","spat_nav_modules/graph.js"]
     }
      ],

@@ -13,7 +13,7 @@
 var node_num;
 
 function make_data_structure(){
-    var focusable = document.body.focusableAreas({'mode': 'visible'});
+    var focusable = document.body.focusableAreas({'mode': 'all'});
     node_num = focusable.length;
     var graph = new Array(node_num);
     var dir = ["up", "down", "left", "right"];
@@ -211,7 +211,8 @@ function trap_detector(){
   for(var i = 0; i < scc.length; i++){
     if(!scc[i][0].length){
       for(var j = 1; j < scc[i].length; j++){
-        alert(scc[i][j].node_id);
+	      scc[i][j].style.backgroundColor = "#FDFF47"
+	      //scc[i][j].style.color = "#47e0ff"
       }
     }
   }
