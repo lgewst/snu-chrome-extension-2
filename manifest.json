@@ -1,16 +1,21 @@
 {
     "manifest_version": 2,
    
-    "name": "Spat_nav_evaluatior",
+    "name": "Spat_nav_evaluatior 2.0",
     "description": "evaluator for spatial navagiation",
-    "version": "1.0",
+    "version": "2.0",
     "devtools_page": "spat_nav.html",
 
     "browser_action": {
-      "default_icon": "icon.png",
-      "default_popup": "popup.html"
+      "default_icon": "icon.png"
     },
+    "content_scripts": [
+    {
+      "matches": ["https://www.wikipedia.org/*"],
+      "js": ["spatnav-heuristic.js","jquery-3.3.1.min.js","spat_nav_modules/graph.js"]
+    }
+     ],
     "permissions": [
-      "activeTab"
+      "activeTab",  "tabs", "http://*/*", "https://*/*"
     ]
   }

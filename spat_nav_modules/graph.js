@@ -13,7 +13,7 @@
 var node_num;
 
 function make_data_structure(){
-    var focusable = document.body.focusableAreas({'mode': 'all'});
+    var focusable = document.body.focusableAreas({'mode': 'visible'});
     node_num = focusable.length;
     var graph = new Array(node_num);
     var dir = ["up", "down", "left", "right"];
