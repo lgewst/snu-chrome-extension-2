@@ -13,7 +13,7 @@
 var node_num;
 
 function make_data_structure(){
-    var focusable = document.body.focusableAreas({'mode': 'all'});
+    var focusable = document.body.focusableAreas({'mode': 'visible'});
     node_num = focusable.length;
     var graph = new Array(node_num);
     var dir = ["up", "down", "left", "right"];
@@ -158,7 +158,6 @@ function make_scc(){
     var node_id = stack.pop();
     if(!visited[node_id]){
       scc.push([]);
-      scc[scc.length-1].push([]);
       rev_dfs(node_id)
     }
   }
@@ -208,11 +207,11 @@ function condensation(){
 }
 
 function trap_detector(){
-	if(scc.length == 1) return;
+	// if(scc.length == 1) return;
 
   for(var i = 0; i < scc.length; i++){
     if(!scc[i][0].length){
-      for(var j = 1; j < scc[i].length; j++){
+      for(var j = 0; j < scc[i].length; j++){
 	      scc[i][j].style.backgroundColor = "#FDFF47"
 	      scc[i][j].style.color = "#47e0ff"
 	      scc[i][j].style.borderColor = "yellow"
@@ -225,3 +224,4 @@ function trap_detector(){
 
 make_scc();
 trap_detector();
+console.log(scc);
