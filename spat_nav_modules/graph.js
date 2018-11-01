@@ -20,7 +20,7 @@ function graph(){
  * Nodes | origin | up | down | left | right |
  *
  */
-graph.prototype.make_adj_array = function(){
+graph.prototype.make_adj_array = function(direction){
     var focusable = document.body.focusableAreas({'mode': 'visible'});
     this.node_num = focusable.length;
     this.visited = new Array(this.node_num).fill(0);
@@ -32,10 +32,12 @@ graph.prototype.make_adj_array = function(){
       focusable[i].node_id = i
       graph[i] = new Array(5);
       graph[i][0] = focusable[i];
-
-      for(var j = 0; j < dir.length; j++){
+      if(!direction){
+        for(var j = 0; j < dir.length; j++){
           graph[i][j+1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[j]);
+        }
       }
+      else graph[i][direction-1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[direction-1]);
     }
     return graph;
 }
@@ -132,9 +134,32 @@ graph.prototype.make_rev_adj_list = function(directed_graph){
   return reversed_graph_list;
 }
 
+graph.prototype.make_rev_scc = function(scc){
+// the return value (reversed_directed_graph_without_redundanc) is list of list.
+// each list is composed with starting node and destination nodes.
+// the first element is starting_node.
+// ex> reverse_graph_list[10][0] = starting node
+// ex> reverse_graph_list[10][1:] = all destination nodes list
 
+  var rev_scc = [];
+
+  for (var i = 0; i < scc.length; i++){
+    rev_scc.push([]);
+  }
+
+  for(var i = 0; i < scc.length; i++){
+    for(var j = 1; j < scc[i][0].length; j++){
+      rev_scc[scc[i][0][j]].push(i);
+    }
+  }
+  return rev_scc;
+}
 /*
  * SCC(Strong Conected Component) with DFS
+ * scc[i][0] contains edges.
+ * (e.g : scc[0][0] == [1,2] means scc[0] has directed edges to scc[1], scc[2])
+ * scc[i][j] (j >= 1) is a node of scc.
+ * scc[i][1], scc[i][2], scc[i][3] ... are nodes that belong to scc[i]
  * 
  */
 
@@ -198,34 +223,86 @@ graph.prototype.condensation = function(){
   }
 }
 
-function trap_detector(){
-  // if(scc.length == 1) return;
-  var graph_trap = new graph();
-  graph_trap.adj_list = graph_trap.make_adj_list(graph_trap.adj_array);
-  graph_trap.rev_adj_list = graph_trap.make_rev_adj_list(graph_trap.adj_list);
-  graph_trap.make_scc();
-  for(var i = 0; i < graph_trap.scc.length; i++){
-    if(!graph_trap.scc[i][0].length){
-      for(var j = 0; j < graph_trap.scc[i].length; j++){
-	      graph_trap.scc[i][j].style.backgroundColor = "#FDFF47"
-	      graph_trap.scc[i][j].style.color = "#47e0ff"
-	      graph_trap.scc[i][j].style.borderColor = "yellow"
-	      graph_trap.scc[i][j].style.borderStyle = "dotted"
-	      graph_trap.scc[i][j].style.borderWidth = "1"
+graph.prototype.trap_visualize = function(border_color){
+  for(var i = 0; i < this.scc.length; i++){
+    if(!this.scc[i][0].length){
+      for(var j = 1; j < this.scc[i].length; j++){
+	      this.scc[i][j].style.backgroundColor = "#FDFF47"
+	      this.scc[i][j].style.color = "#47e0ff"
+	      this.scc[i][j].style.borderColor = border_color
+	      this.scc[i][j].style.borderStyle = "dashed"
+	      this.scc[i][j].style.borderWidth = "2"
       }
     }
   }
+}
+
+graph.prototype.loop_visualize = function(border_color){
+  for(var i = 0; i < this.scc.length; i++){
+    if(this.scc[i].length>=2){
+      for(var j = 0; j < this.scc[i].length; j++){
+	      this.scc[i][j].style.backgroundColor = "#FDFF47"
+	      this.scc[i][j].style.color = "#47e0ff"
+	      this.scc[i][j].style.borderColor = border_color
+	      this.scc[i][j].style.borderStyle = "dashed"
+	      this.scc[i][j].style.borderWidth = "2"
+      }
+    }
+  }
+}
+
+
+function trap_detector(){
+  // if(scc.length == 1) return;
+  var graph_trap = new graph();
+  graph_trap.adj_array = graph_trap.make_adj_array(0);
+  graph_trap.adj_list = graph_trap.make_adj_list(graph_trap.adj_array);
+  graph_trap.rev_adj_list = graph_trap.make_rev_adj_list(graph_trap.adj_list);
+  graph_trap.make_scc();
+  graph_trap.trap_visualize("yellow")
   return graph_trap.scc
 }
 
 function loop_detector(){
+  var graph_loop = new graph();
+  graph_loop.adj_array_up = graph_loop.make_adj_array(1);
+  graph_loop.adj_list = graph_trap.make_adj_list(graph_trap.adj_array_up);
+  graph_loop.rev_adj_list = graph_trap.make_rev_adj_list(graph_trap.adj_list);
+  graph_loop.make_scc();
+  graph_loop.loop_visualize("red")
 
+  graph_loop.adj_array_down = graph_loop.make_adj_array(2);
+  graph_loop.adj_list = graph_trap.make_adj_list(graph_trap.adj_array_down);
+  graph_loop.rev_adj_list = graph_trap.make_rev_adj_list(graph_trap.adj_list);
+  graph_loop.make_scc();
+  graph_loop.loop_visualize("yellow")
+
+  graph_loop.adj_array_left = graph_loop.make_adj_array(3);
+  graph_loop.adj_list = graph_trap.make_adj_list(graph_trap.adj_array_left);
+  graph_loop.rev_adj_list = graph_trap.make_rev_adj_list(graph_trap.adj_list);
+  graph_loop.make_scc();
+  graph_loop.loop_visualize("blue")
+  
+  graph_loop.adj_array_right = graph_loop.make_adj_array(4);
+  graph_loop.adj_list = graph_trap.make_adj_list(graph_trap.adj_array_right);
+  graph_loop.rev_adj_list = graph_trap.make_rev_adj_list(graph_trap.adj_list);
+  graph_loop.make_scc();
+  graph_loop.loop_visualize("green")
 }
 
 function unreachable_detector(){
-
+  var graph_loop = new graph();
+  graph_unreachable.adj_array = graph_trap.make_adj_array(0);
+  graph_unreachable.adj_list = graph_trap.make_adj_list(graph_trap.adj_array);
+  graph_unreachable.rev_adj_list = graph_trap.make_rev_adj_list(graph_trap.adj_list);
+  graph_unreachable.make_scc();
+  graph_unreachable.make_rev_scc();
 }
 
-chrome.storage.sync.set(
-  {'scc' : trap_detector()}
-)
+trap_detector();
+loop_detector();
+unreachable_detector();
+
+// chrome.storage.sync.set(
+//   {'scc' : trap_detector()}
+// )
