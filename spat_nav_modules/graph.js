@@ -224,4 +224,7 @@ function trap_detector(){
 
 make_scc();
 trap_detector();
-console.log(scc);
+
+chrome.storage.sync.set(
+  {'scc' : scc}
+)
