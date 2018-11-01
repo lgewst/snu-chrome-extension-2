@@ -13,7 +13,7 @@
 var node_num;
 
 function make_data_structure(){
-    var focusable = document.body.focusableAreas({'mode': 'visible'});
+    var focusable = document.body.focusableAreas({'mode': 'all'});
     node_num = focusable.length;
     var graph = new Array(node_num);
     var dir = ["up", "down", "left", "right"];
@@ -115,28 +115,23 @@ function make_reversed_directed_graph(directed_graph){
   }
 
   for(var i = 0; i < directed_graph.length; i++){
-
-    var former_starting_node = directed_graph[i][0];
-
-    for(var j=1; j< directed_graph[i].length; j++){
-      var former_destination = directed_graph[i][j];
-      var reverse_graph_list = insert_node_in_directed_graph(former_destination, former_starting_node, reversed_graph_list)
+    for(var j = 1; j < directed_graph[i].length; j++){
+      reversed_graph_list[directed_graph[i][j].node_id].push(directed_graph[i][0]);
     }
   }
-
-  var reversed_directed_graph_without_redundancy = []
-  // redundancy must be removed in destination list of each starting node.
-  for(var k=0; k< reversed_graph_list.length; k++){
-    var element = [reverse_graph_list[k][0]]
-    element = element.concat(remove_redundancy_in_array(reverse_graph_list[k].slice(1,reverse_graph_list[k].length)));
-    reversed_directed_graph_without_redundancy.push(element)
-  }
-
-  return reversed_directed_graph_without_redundancy;
+  return reversed_graph_list;
 }
 
-var graph = make_data_structure(); var res = make_directed_graph(graph); var rev = make_reversed_directed_graph(res);
-
+var time = new Date();
+var graph = make_data_structure();
+var graph_time = new Date();
+alert(graph_time - time);
+var res = make_directed_graph(graph);
+var graph_time2 = new Date();
+alert(graph_time2 - graph_time);
+var rev = make_reversed_directed_graph(res);
+var graph_time3 = new Date();
+alert(graph_time3 - graph_time2);
 /*
  * SCC(Strong Conected Component) with DFS
  * 
