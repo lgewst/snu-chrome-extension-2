@@ -5,7 +5,6 @@ chrome.devtools.panels.create("Spat_nav",
     }
 );
 
-
 // Create a connection to the background page
 var backgroundPageConnection = chrome.runtime.connect({
     name: "panel"
