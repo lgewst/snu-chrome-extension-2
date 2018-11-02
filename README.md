@@ -17,11 +17,10 @@
 
 - focusable element의 directed graph를 SCC를 이용하여 DAG를 그리면 topological order로 정렬할 수 있다.
 이렇게 만든 SCC를 가지고서 각종 error를 탐지하고 리포트를 한다.
+- 코사라주 알고리즘을 이용하여 SCC를 만들었으며 O(V+E), Condensation은 찾을 수 없어서 직접 구현하였다 O(V+E).
 
 ### trap detector
 topological order로 정렬된 SCC에서, 나가는 방향의 edge가 없는 SCC는 trap으로 간주 할 수 있다.
-
-코사라주 알고리즘을 이용하여 SCC를 만들었으며 O(V+E), Condensation은 찾을 수 없어서 직접 구현하였다 O(V+E).
 
 테스트 페이지에서 잘 작동하는 것으로 보인다. SCC가 하나인 경우에도(즉, 현재 보이는 element들이 전부 하나의 trap으로 탐지) highlight되게 설정해놓았으며, UI를 만들고 난 뒤에는 SCC가 둘 이상인 경우에만 작동하도록 할 예정.
 
