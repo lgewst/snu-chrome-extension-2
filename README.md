@@ -3,19 +3,19 @@
 ## test_page/index.html 와 test_page/trapped.html에 대해 동작을 확인하는 방법
 
 1. 깃 클론해서 받은 다음에 chrome 설정 => 도구 더보기 => 확장프로그램으로 들어간다.
-2. 압축해제된 확장프로그램을 로드합니다 click => clone한 folder click => 확인 click.
-3. UI는 만들지 않은 상태 // spat_nav_modules/graph.js 를 열고 373 ~ 376줄의 코드를 디텍터를 주석 해제하면 해당 detector가 활성화된다. 그리고 26라인의 'visible', 'all'을 바꾸면서 테스트 할 수 있다.
-4. chrome에서 우클릭 => 검사를 누르면 해당 detector가 작동하고, detector에 감지된 element들은 노란색으로 highlight된다.
-5. 아직 UI가 완전치 않아 한번 highlight된 것은 refresh를 하여서 원상태로 만들고, 다른 detctor를 확인하고 싶은경우 2~4를 반복한다.
+1. 압축해제된 확장프로그램을 로드합니다 click => clone한 folder click => 확인 click.
+1. UI는 만들지 않은 상태 // spat_nav_modules/graph.js 를 열고 373 ~ 376줄의 코드를 디텍터를 주석 해제하면 해당 detector가 활성화된다. 그리고 26라인의 'visible', 'all'을 바꾸면서 테스트 할 수 있다.
+1. chrome에서 우클릭 => 검사를 누르면 해당 detector가 작동하고, detector에 감지된 element들은 노란색으로 highlight된다.
+1. 아직 UI가 완전치 않아 한번 highlight된 것은 refresh를 하여서 원상태로 만들고, 다른 detctor를 확인하고 싶은경우 2~4를 반복한다.
 
 ## SCC (Strongly Connected Component)
 1. 같은 SCC 내에 속하는 임의의 서로 다른 두 정점은 서로 도달 가능하다.
-2. 어떤 정점이나 간선도 1의 조건을 만족하면서 이 SCC에 추가될 수 없다.(최대부분집합)
-3. SCC를 node로 보았을 때, edge들이 condensation된 상태에서 DAG형태로 변환 할 수 있다.
+1. 어떤 정점이나 간선도 1의 조건을 만족하면서 이 SCC에 추가될 수 없다.(최대부분집합)
+1. SCC를 node로 보았을 때, edge들이 condensation된 상태에서 DAG형태로 변환 할 수 있다.
 
 ## current state
 
-focusable element의 directed graph를 SCC를 이용하여 DAG를 그리면 topological order로 정렬할 수 있다.
+- focusable element의 directed graph를 SCC를 이용하여 DAG를 그리면 topological order로 정렬할 수 있다.
 이렇게 만든 SCC를 가지고서 각종 error를 탐지하고 리포트를 한다.
 
 ### trap detector
