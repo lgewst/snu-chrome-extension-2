@@ -2,8 +2,8 @@
 
 ## test_page/index.html 와 test_page/trapped.html에 대해 동작을 확인하는 방법
 
-1. 깃 클론해서 받은 다음에 chrome 설정 => 도구 더보기 => 확장프로그램으로 들어간다.
-1. 압축해제된 확장프로그램을 로드합니다 click => clone한 folder click => 확인 click.
+1. `git clone https://github.com/lgewst/snu-chrome-extension-2.git` 으로 받은 다음에 chrome 설정 => 도구 더보기 => 확장프로그램.
+1. 압축해제된 확장프로그램을 로드합니다 click => clone한 folder click => 확인.
 1. UI는 만들지 않은 상태로, spat_nav_modules/graph.js 를 열고 373 ~ 376줄의 코드를 디텍터를 주석 해제하면 해당 detector가 활성화된다. 그리고 26라인의 `'visible'`, `'all'`을 바꾸면서 테스트 할 수 있다.
 1. chrome에서 우클릭 => 검사를 누르면 해당 detector가 작동하고, detector에 감지된 element들은 노란색으로 highlight된다.
 1. 아직 UI가 완전치 않아 한번 highlight된 것은 refresh를 하여서 원상태로 만들고, 다른 detctor를 확인하고 싶은경우 2~4를 반복한다.
