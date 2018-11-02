@@ -3,9 +3,11 @@ function graph(){
   this.adj_list = [];
   this.rev_adj_list = [];
   this.node_num;
+  this.rev_scc = [];
   this.scc = [];
   this.visited;
   this.stack = [];
+  this.scc_visited = [];
 }
 
 /* A fuction that makes a data structure of Graph.
@@ -21,7 +23,7 @@ function graph(){
  *
  */
 graph.prototype.make_adj_array = function(direction){
-    var focusable = document.body.focusableAreas({'mode': 'all'});
+    var focusable = document.body.focusableAreas({'mode': 'visible'});
     this.node_num = focusable.length;
     this.visited = new Array(this.node_num).fill(0);
     var graph = new Array(this.node_num);
@@ -151,11 +153,12 @@ graph.prototype.make_rev_scc = function(scc){
   }
 
   for(var i = 0; i < scc.length; i++){
-    for(var j = 1; j < scc[i][0].length; j++){
-      rev_scc[scc[i][0][j]][0].push(i);
+    for(var j = 0; j < scc[i][0].length; j++){
+      rev_scc[scc[i][0][j]].push(i);
     }
   }
-  return rev_scc;
+
+  this.rev_scc = rev_scc;
 }
 /*
  * SCC(Strong Conected Component) with DFS
@@ -210,7 +213,6 @@ graph.prototype.rev_dfs = function(node_id){
 }
 
 graph.prototype.condensation = function(){
-
   var tmp = [];
   for(var i = 0; i < this.scc.length; i++){
     tmp.length = 0;
@@ -231,43 +233,77 @@ graph.prototype.condensation = function(){
   }
 }
 
-graph.prototype.trap_visualizor = function(border_color){
+graph.prototype.trap_visualizer = function(border_color){
   for(var i = 0; i < this.scc.length; i++){
     if(!this.scc[i][0].length){
+      console.log("trap elements");
       for(var j = 1; j < this.scc[i].length; j++){
-	      this.scc[i][j].style.backgroundColor = "#FDFF47"
+        this.scc[i][j].style.backgroundColor = "#FDFF47"
 	      this.scc[i][j].style.color = "#47e0ff"
 	      this.scc[i][j].style.borderColor = border_color
 	      this.scc[i][j].style.borderStyle = "dashed"
 	      this.scc[i][j].style.borderWidth = "2"
+        console.log(this.scc[i][j]);
       }
     }
   }
 }
 
-graph.prototype.loop_visualizor = function(border_color){
+graph.prototype.loop_visualizer = function(border_color){
   for(var i = 0; i < this.scc.length; i++){
     if(this.scc[i][0].length>=2){
+      console.log("loop elements");
       for(var j = 1; j < this.scc[i].length; j++){
-	      this.scc[i][j].style.backgroundColor = "#FDFF47"
+        this.scc[i][j].style.backgroundColor = "#FDFF47"
 	      this.scc[i][j].style.color = "#47e0ff"
 	      this.scc[i][j].style.borderColor = border_color
 	      this.scc[i][j].style.borderStyle = "dashed"
 	      this.scc[i][j].style.borderWidth = "2"
+        console.log(this.scc[i][j]);
       }
     }
   }
 }
 
-graph.prototype.unreachable_visualizor = function(border_color){
+graph.prototype.unreachable_visualizer = function(border_color){
+  this.scc_visited = new Array(this.scc.length);
+  var index = this.adj_list[0].scc_id;
+  console.log(this.scc);
+  console.log(this.rev_scc);
+  console.log("unreachable elements")
+  for(var i = 0; i < this.rev_scc[index].length; i++){
+    this.unreachable_dfs(this.rev_scc[index][i], border_color);
+  }
+}
+
+graph.prototype.unreachable_dfs = function(scc_id, border_color){
+  this.scc_visited[scc_id] = 1;
+  for(var j = 1; j < this.scc[scc_id].length; j++){
+    this.scc[scc_id][j].style.backgroundColor = "#FDFF47"
+    this.scc[scc_id][j].style.color = "#47e0ff"
+    this.scc[scc_id][j].style.borderColor = border_color
+    this.scc[scc_id][j].style.borderStyle = "dashed"
+    this.scc[scc_id][j].style.borderWidth = "2"
+    console.log(this.scc[scc_id][j]);
+  }
+  for(var i = 0; i < this.rev_scc[scc_id].length; i++){
+    if(!this.scc_visited[scc_id]){
+      this.unreachable_dfs(this.rev_scc[scc_id][i], border_color)
+    }
+  }
+}
+
+graph.prototype.isolation_visualizer = function(border_color){
   for(var i = 0; i < this.scc.length; i++){
-    if(!this.scc[i][0].length && !this.rev_scc[i][0].length){
+    if(!this.scc[i][0].length && !this.rev_scc[i].length){
+      console.log("isolated elements")
       for(var j = 1; j < this.scc[i].length; j++){
 	      this.scc[i][j].style.backgroundColor = "#FDFF47"
 	      this.scc[i][j].style.color = "#47e0ff"
 	      this.scc[i][j].style.borderColor = border_color
 	      this.scc[i][j].style.borderStyle = "dashed"
-	      this.scc[i][j].style.borderWidth = "2"
+        this.scc[i][j].style.borderWidth = "2"
+        console.log(this.scc[i][j]);
       }
     }
   }
@@ -281,10 +317,7 @@ function trap_detector(){
   graph_trap.adj_list = graph_trap.make_adj_list(graph_trap.adj_array);
   graph_trap.rev_adj_list = graph_trap.make_rev_adj_list(graph_trap.adj_list);
   graph_trap.make_scc();
-  graph_trap.trap_visualizor("yellow")
-  console.log(graph_trap.scc);
-  console.log(graph_trap.adj_array);
-  console.log(graph_trap.adj_list);
+  graph_trap.trap_visualizer("yellow")
   return graph_trap.scc
 }
 
@@ -294,21 +327,21 @@ function loop_detector(){
   graph_loop_up.adj_list = graph_loop_up.make_adj_list(graph_loop_up.adj_array);
   graph_loop_up.rev_adj_list = graph_loop_up.make_rev_adj_list(graph_loop_up.adj_list);
   graph_loop_up.make_scc();
-  graph_loop_up.loop_visualizor("red")
+  graph_loop_up.loop_visualizer("red")
 
   var graph_loop_down = new graph();
   graph_loop_down.adj_array = graph_loop_down.make_adj_array(2);
   graph_loop_down.adj_list = graph_loop_down.make_adj_list(graph_loop_down.adj_array);
   graph_loop_down.rev_adj_list = graph_loop_down.make_rev_adj_list(graph_loop_down.adj_list);
   graph_loop_down.make_scc();
-  graph_loop_down.loop_visualizor("yellow")
+  graph_loop_down.loop_visualizer("yellow")
 
   var graph_loop_left = new graph();
   graph_loop_left.adj_array = graph_loop_left.make_adj_array(3);
   graph_loop_left.adj_list = graph_loop_left.make_adj_list(graph_loop_left.adj_array);
   graph_loop_left.rev_adj_list = graph_loop_left.make_rev_adj_list(graph_loop_left.adj_list);
   graph_loop_left.make_scc();
-  graph_loop_left.loop_visualizor("blue")
+  graph_loop_left.loop_visualizer("blue")
 
   
   var graph_loop_right = new graph();
@@ -316,10 +349,7 @@ function loop_detector(){
   graph_loop_right.adj_list = graph_loop_right.make_adj_list(graph_loop_right.adj_array);
   graph_loop_right.rev_adj_list = graph_loop_right.make_rev_adj_list(graph_loop_right.adj_list);
   graph_loop_right.make_scc();
-  graph_loop_right.loop_visualizor("green");
-  console.log(graph_loop_right.scc);
-  console.log(graph_loop_right.adj_array);
-  console.log(graph_loop_right.adj_list);
+  graph_loop_right.loop_visualizer("green");
 }
 
 function unreachable_detector(){
@@ -328,13 +358,24 @@ function unreachable_detector(){
   graph_unreachable.adj_list = graph_unreachable.make_adj_list(graph_unreachable.adj_array);
   graph_unreachable.rev_adj_list = graph_unreachable.make_rev_adj_list(graph_unreachable.adj_list);
   graph_unreachable.make_scc();
-  graph_unreachable.make_rev_scc();
-  graph_unreachable.loop_visualizor("purple")
+  graph_unreachable.make_rev_scc(graph_unreachable.scc);
+  graph_unreachable.unreachable_visualizer("purple");
 }
 
-trap_detector();
+function isolation_detector(){
+  var graph_isolation = new graph();
+  graph_isolation.adj_array = graph_isolation.make_adj_array(0);
+  graph_isolation.adj_list = graph_isolation.make_adj_list(graph_isolation.adj_array);
+  graph_isolation.rev_adj_list = graph_isolation.make_rev_adj_list(graph_isolation.adj_list);
+  graph_isolation.make_scc();
+  graph_isolation.make_rev_scc(graph_isolation.scc);
+  graph_isolation.isolation_visualizer("purple");
+}
+
+// trap_detector();
+unreachable_detector();
 // loop_detector();
-// unreachable_detector();
+// isolation_detector();
 
 // chrome.storage.sync.set(
 //   {'scc' : trap_detector()}

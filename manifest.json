@@ -1,10 +1,10 @@
 {
     "manifest_version": 2,
    
-    "name": "Spat_nav_evaluatior 2.0",
+    "name": "Spat_nav_evaluator 2.0",
     "description": "evaluator for spatial navagiation",
     "version": "2.0",
-    "devtools_page": "spat_nav.html",
+    "devtools_page": "panel.html",
     "background": {
        "scripts": ["background.js"],
        "persistent": false
