@@ -2,7 +2,7 @@
 
 ## test_page/index.html 와 test_page/trapped.html에 대해 동작을 확인하는 방법
 
-1. 깃 클론해서 받은 다음에 chrome 설정 => 도구 더보기 => 확장프로그램으로 들어간다.
+1. `git clone 해서 받은 다음에 chrome 설정 => 도구 더보기 => 확장프로그램으로 들어간다.
 1. 압축해제된 확장프로그램을 로드합니다 click => clone한 folder click => 확인 click.
 1. UI는 만들지 않은 상태로, spat_nav_modules/graph.js 를 열고 373 ~ 376줄의 코드를 디텍터를 주석 해제하면 해당 detector가 활성화된다. 그리고 26라인의 `'visible'`, `'all'`을 바꾸면서 테스트 할 수 있다.
 1. chrome에서 우클릭 => 검사를 누르면 해당 detector가 작동하고, detector에 감지된 element들은 노란색으로 highlight된다.
@@ -34,13 +34,13 @@ focusable element의 directed graph를 만들 때, 한 방향키의 input만 있
 실제로 loop가 있는 경우는 탐지가능하다고 추정 중이나 실제 케이스가 없어서 확인은 못한 상태. test page처럼 다이나믹하게 변하는 경우는 탐지 불가능 한 상태.
 
 ### unreachable detector
-starting point가 어디냐에 따라 unreachble element가 바뀔 수 있다. isolated된 SCC가 없다는 가정하에, 어떤 SCC에서 시작하여 방향키를 누른다면 SCC는 DAG상태로 정렬 되어 있으므로 나가는 방향의 SCC만 탐색할 수 있다. 따라서 SCC의 edge들을 역으로 뒤집은 후에, DFS함으로써 unreachable한 SCC를 찾을 수 있다.
+starting point가 어디냐에 따라 unreachable element가 바뀔 수 있다. isolated SCC가 없다는 가정하에, 어떤 SCC에서 시작하여 방향키를 누른다면 SCC는 DAG상태로 정렬 되어 있으므로 나가는 방향의 SCC만 탐색할 수 있다. 따라서 SCC의 edge들을 역으로 뒤집은 후에, DFS함으로써 unreachable SCC를 찾을 수 있다.
 
 `index.html`에서 잘 작동하는 것으로 보이며, `'visible'` 일 때 잘 작동하는 것을 확인 할 수 있었다. focusable element들 중 가장 처음 element에서 시작하며, 키보드로만 움직인다는 가정하에 만들었다. unreachable의 경우에 방향키가 아닌 우연한(터치, 탭 등등) 방법으로 unreachable element에 focus되었을 때, 키보드를 누르면 다른 element로 focus를 옮길 수 있다.
 
 ### isolation detector
-위의 가정과는 다르게, isolated된 SCC가 있다는 가정하에 적용할 수 있다. 이 경우가 발생 할 수 있는지는 확실치 않다.
+위의 가정과는 다르게, isolated된 SCC가 있다는 가정하에 적용할 수 있다. 이 경우가 실제 웹에서 발생 할 수 있는지는 확실치 않다.
 
-고립되어있는 SCC는 해당 SCC내에서는 자유롭게 움직일 수 있지만 다른 SCC로 넘어 갈 수 없다. unreachable과는 다르게 우연히 isolation 되어있는 SCC에 focus가 갔을 때, 키보드로는 다른 SCC로 넘어 갈 방법이 없는 것을 상정하였다.
+고립되어있는 SCC는 해당 SCC내에서는 자유롭게 움직일 수 있지만 다른 SCC로 넘어 갈 수 없다. unreachable과는 다르게 우연히 isolated SCC에 focus가 갔을 때, 키보드로는 다른 SCC로 넘어 갈 방법이 없는 것을 상정하였다.
 
 현재 구현 중이며 거의 다 만든 상태. 이것 역시 시작점에 따라 detect되는 SCC가 달라질 수 있다.
