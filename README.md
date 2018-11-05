@@ -6,7 +6,7 @@
 1. 압축해제된 확장프로그램을 로드합니다 click => clone한 folder click => 확인 click.
 1. UI는 만들지 않은 상태로, spat_nav_modules/graph.js 를 열고 373 ~ 376줄의 코드를 디텍터를 주석 해제하면 해당 detector가 활성화된다. 그리고 26라인의 `'visible'`, `'all'`을 바꾸면서 테스트 할 수 있다.
 1. chrome에서 우클릭 => 검사를 누르면 해당 detector가 작동하고, detector에 감지된 element들은 노란색으로 highlight된다.
-1. 아직 UI가 완전치 않아 한번 highlight된 것은 refresh를 하여서 원상태로 만들고, 다른 detctor를 확인하고 싶은경우 2~4를 반복한다.
+1. 아직 UI가 완전치 않아 한번 highlight된 것은 refresh를 하여서 원상태로 만들고, 다른 detctor를 확인하고 싶은경우 3~4를 반복한다.
 
 ## SCC (Strongly Connected Component)
 1. 같은 SCC 내에 속하는 임의의 서로 다른 두 정점은 서로 도달 가능하다.
