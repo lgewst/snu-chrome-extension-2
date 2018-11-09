@@ -373,10 +373,9 @@ function isolation_detector(){
 }
 
 // trap_detector();
-unreachable_detector();
+//unreachable_detector();
 // loop_detector();
 // isolation_detector();
 
-// chrome.storage.sync.set(
-//   {'scc' : trap_detector()}
-// )
+var hello_to_dev_tool_panel = "hello from graph.js!";
+hello_to_dev_tool_panel;
