@@ -1,1 +1,1 @@
-document.body.focusableAreas({"mode": "visible"})[0].id;
+document.body.focusableAreas({"mode": "all"})[0].id;

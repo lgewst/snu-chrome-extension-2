@@ -8,9 +8,21 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
   <link rel="stylesheet" href="style.css">
   <!-- 폴리필코드를 명시적으로 실행하려면 아래 줄을 주석해제.  -->
-  <!-- <script src="polyfill/spatnav-heuristic.js"></script> -->
+  <script src="polyfill/spatnav-heuristic.js"></script>
   <script type="text/javascript">
     window.addEventListener("load", function() {
+      function focus_error_detector(){
+        var focusable = document.body.focusableAreas({'mode': 'all'});
+        console.log(focusable);
+        focusable[30].focus();
+        console.log(getComputedStyle(focusable[30]).getPropertyValue('outline').trim());
+        
+        let clearFocusRing = document.getElementsByClassName('small-box3');
+        console.log(clearFocusRing);
+        clearFocusRing[0].focus();
+        console.log(getComputedStyle(clearFocusRing[0]).getPropertyValue(`outline`).trim());
+      }
+      focus_error_detector()
       let loopingBox1 = document.getElementById('looping-first');
       let loopingBox3 = document.getElementById('looping-third');
 

@@ -508,7 +508,7 @@
     }
 
     if (option.mode === 'all') {
-      return focusables;
+      return focusables.filter(isVisibleWithScroll);
     }
     else if (option.mode === 'visible') {
       return findVisibles(focusables);
@@ -786,6 +786,9 @@
     return (!element.parentElement) || (isVisibleStyleProperty(element) && hitTest(element));
   }
 
+  function isVisibleWithScroll(element) {
+    return (!element.parentElement) || (isVisibleStyleProperty(element) && hitTestWithScroll(element));
+  }
   /**
   * isEntirelyVisible :
   * Check whether this element is completely visible in this viewport for the arrow direction.
@@ -819,6 +822,25 @@
     return (!invisibleStyle.includes(thisVisibility) && thisDisplay !== 'none');
   }
 
+  function elementFromPointInWholeDocument(x,y) {
+    var elm, scrollX, scrollY, newX, newY;
+    /* Stash current Window Scroll */
+    scrollX = window.pageXOffset;
+    scrollY = window.pageYOffset;
+    /* Scroll to element */
+    window.scrollTo(x,y);
+    /* Calculate new relative element coordinates */
+    newX = x - window.pageXOffset;
+    newY = y - window.pageYOffset;
+    /* Grab the element */
+    elm = document.elementFromPoint(newX,newY);
+
+    /* revert to the previous scroll location */
+    window.scrollTo(scrollX,scrollY);
+    /* returned the grabbed element at the absolute coordinates */
+    return elm;
+  };
+
   /**
   * hitTest :
   * Check whether this element is entirely or partially visible within the viewport.
@@ -826,6 +848,28 @@
   * @param {<Node>} element
   * @returns {Boolean}
   **/
+  function hitTestWithScroll(element) {
+    let offsetX = parseInt(window.getComputedStyle(element, null).getPropertyValue('width')) / 10;
+    let offsetY = parseInt(window.getComputedStyle(element, null).getPropertyValue('height')) / 10;
+
+    offsetX = isNaN(offsetX) ? 0 : offsetX;
+    offsetY = isNaN(offsetY) ? 0 : offsetY;
+
+    const elementRect = getBoundingClientRect(element);
+
+    const middleElem = elementFromPointInWholeDocument((elementRect.left + elementRect.right) / 2, (elementRect.top + elementRect.bottom) / 2);
+    const leftTopElem = elementFromPointInWholeDocument(elementRect.left + offsetX, elementRect.top + offsetY);
+    const leftBottomElem = elementFromPointInWholeDocument(elementRect.left + offsetX, elementRect.bottom - offsetY);
+    const rightTopElem = elementFromPointInWholeDocument(elementRect.right - offsetX, elementRect.top + offsetY);
+    const rightBottomElem = elementFromPointInWholeDocument(elementRect.right - offsetX, elementRect.bottom - offsetY);
+
+    return ((element === middleElem || element.contains(middleElem)) ||
+          (element === leftTopElem || element.contains(leftTopElem)) ||
+          (element === leftBottomElem || element.contains(leftBottomElem)) ||
+          (element === rightTopElem || element.contains(rightTopElem)) ||
+          (element === rightBottomElem || element.contains(rightBottomElem)));
+  }
+
   function hitTest(element) {
     let offsetX = parseInt(window.getComputedStyle(element, null).getPropertyValue('width')) / 10;
     let offsetY = parseInt(window.getComputedStyle(element, null).getPropertyValue('height')) / 10;
@@ -1143,20 +1187,54 @@
   }
 
   function getBoundingClientRect(element) {
-    let rect = mapOfBoundRect.get(element);   // memoization
-    if(!rect) {
-      const boundingClientRect = element.getBoundingClientRect();
-      rect = {
-        top: Number(boundingClientRect.top.toFixed(2)),
-        right: Number(boundingClientRect.right.toFixed(2)),
-        bottom: Number(boundingClientRect.bottom.toFixed(2)),
-        left: Number(boundingClientRect.left.toFixed(2)),
-        width: Number(boundingClientRect.width.toFixed(2)),
-        height: Number(boundingClientRect.height.toFixed(2))
-      };
-      mapOfBoundRect.set(element, rect);
+    if(window.AA === 1) {
+      let rect = mapOfBoundRect.get(element);   // memoization
+      //let rect = undefined;
+      if(!rect) {
+        const boundingClientRect = element.getBoundingClientRect();
+        rect = {
+          top: Number(boundingClientRect.top.toFixed(2)),
+          right: Number(boundingClientRect.right.toFixed(2)),
+          bottom: Number(boundingClientRect.bottom.toFixed(2)),
+          left: Number(boundingClientRect.left.toFixed(2)),
+          width: Number(boundingClientRect.width.toFixed(2)),
+          height: Number(boundingClientRect.height.toFixed(2))
+        };
+        mapOfBoundRect.set(element, rect);
+      }
+      return rect;
+    } else if (window.AA === 2) {
+      let rect = undefined;
+      if(!rect) {
+        const boundingClientRect = element.getBoundingClientRect();
+        rect = {
+          top: boundingClientRect.top.toFixed(2)*1,
+          right: boundingClientRect.right.toFixed(2)*1,
+          bottom: boundingClientRect.bottom.toFixed(2)*1,
+          left: boundingClientRect.left.toFixed(2)*1,
+          width: boundingClientRect.width.toFixed(2)*1,
+          height: boundingClientRect.height.toFixed(2)*1
+        };
+      }
+      return rect;
+    } else {
+      let rect = mapOfBoundRect.get(element);   // memoization
+      //let rect = undefined;
+      if(!rect) {
+        const boundingClientRect = element.getBoundingClientRect();
+        rect = {
+          top: Number(boundingClientRect.top.toFixed(2)),
+          right: Number(boundingClientRect.right.toFixed(2)),
+          bottom: Number(boundingClientRect.bottom.toFixed(2)),
+          left: Number(boundingClientRect.left.toFixed(2)),
+          width: Number(boundingClientRect.width.toFixed(2)),
+          height: Number(boundingClientRect.height.toFixed(2))
+        };
+        mapOfBoundRect.set(element, rect);
+      }
+      return rect;
     }
-    return rect;
+
   }
 
   function setStandardName() {

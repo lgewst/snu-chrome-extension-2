@@ -23,7 +23,7 @@ function graph(){
  *
  */
 graph.prototype.make_adj_array = function(direction){
-    var focusable = document.body.focusableAreas({'mode': 'visible'});
+    var focusable = document.body.focusableAreas({'mode': 'all'});
     this.node_num = focusable.length;
     this.visited = new Array(this.node_num).fill(0);
     var graph = new Array(this.node_num);
@@ -35,13 +35,13 @@ graph.prototype.make_adj_array = function(direction){
         graph[i] = new Array(5);
         graph[i][0] = focusable[i];
         for(var j = 0; j < dir.length; j++){
-          graph[i][j+1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[j]);
+          graph[i][j+1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[j],{'mode': 'all'});
         }
       }
       else {
         graph[i] = new Array(2);
         graph[i][0] = focusable[i];
-        graph[i][1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[direction-1]);
+        graph[i][1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[direction-1],{'mode': 'all'});
       }
     }
     return graph;
@@ -267,6 +267,7 @@ graph.prototype.loop_visualizer = function(border_color){
 
 graph.prototype.unreachable_visualizer = function(border_color){
   this.scc_visited = new Array(this.scc.length);
+  // var index = document.body.spatNavSearch("down");
   var index = this.adj_list[0].scc_id;
   console.log(this.scc);
   console.log(this.rev_scc);
@@ -360,6 +361,7 @@ function unreachable_detector(){
   graph_unreachable.make_scc();
   graph_unreachable.make_rev_scc(graph_unreachable.scc);
   graph_unreachable.unreachable_visualizer("purple");
+  return graph_unreachable;
 }
 
 function isolation_detector(){
@@ -372,10 +374,38 @@ function isolation_detector(){
   graph_isolation.isolation_visualizer("purple");
 }
 
+function focus_error_detector(){
+  var focusable = document.body.focusableAreas({'mode': 'all'});
+  console.log(focusable);
+  console.log(focusable[29]);
+  focusable[29].focus();
+  console.log(getComputedStyle(focusable[29]).getPropertyValue('outline').trim());
+
+  // let clearFocusRing = document.getElementsByClassName('small-box3');
+  // clearFocusRing[0].focus();
+  // console.log(getComputedStyle(clearFocusRing[0]).getPropertyValue(`outline`).trim());
+}
+
+function non_focusable_button(){
+  var element = document.body.getElementsByTagName("*");
+  var result = [];
+  for (var i = 0; i < element.length; i++){
+    if(element[i].hasAttribute('onClick')){
+      if(!element[i].hasAttribute('tabIndex') || element.getAttribute('tablIndex') < 0){
+        result.push(element[i]);
+      }
+    }
+  }
+  console.log(result);
+  return result;
+}
+
 // trap_detector();
-//unreachable_detector();
+// unreachable_detector();
 // loop_detector();
 // isolation_detector();
+// focus_error_detector();
+non_focusable_button();
 
 var hello_to_dev_tool_panel = "hello from graph.js!";
 hello_to_dev_tool_panel;
