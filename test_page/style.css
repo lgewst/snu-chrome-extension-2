@@ -5,7 +5,9 @@ body {
   word-break: break-word;
 }
 
-:focus {
+:focus,
+:focus-within,
+:active {
   outline: 2px solid blue;
 }
 
@@ -70,7 +72,9 @@ a:hover {
   outline: 3px solid blue;
 }
 
-.small-box3:focus {
+.small-box3:focus,
+.small-box3:focus-within,
+.small-box3:active {
   outline: 3px solid red;
 }
 
@@ -82,7 +86,9 @@ a:hover {
   margin-left: 90px
 }
 
-.looping:focus {
+.looping:focus,
+.looping:focus-within,
+.looping:active {
   position: absolute;
   left: 200px;
 }
