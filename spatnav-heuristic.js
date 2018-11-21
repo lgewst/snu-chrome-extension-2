@@ -499,7 +499,7 @@
         if (isFocusable(thisElement)) {
           focusables.push(thisElement);
         }
-        const recursiveFocusables = thisElement.focusableAreas({mode: 'all'});
+        const recursiveFocusables = thisElement.focusableAreas({mode: 'all', recursiveCall: true}, );
 
         if (Array.isArray(recursiveFocusables) && recursiveFocusables.length) {
           focusables = focusables.concat(recursiveFocusables);
@@ -508,9 +508,12 @@
     }
 
     if (option.mode === 'all') {
-      return focusables.filter(isVisibleWithScroll);
-    }
-    else if (option.mode === 'visible') {
+      if (option.recursiveCall) {
+        return focusables;
+      } else {
+        return focusables.filter(isVisibleWithScroll);
+      }
+    } else if (option.mode === 'visible') {
       return findVisibles(focusables);
     }
   }
