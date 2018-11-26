@@ -5,7 +5,9 @@ body {
   word-break: break-word;
 }
 
-:focus {
+:focus,
+:focus-within,
+:active {
   outline: 2px solid blue;
 }
 
@@ -17,6 +19,9 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+
+
 
 /* style for common */
 .text-align {
@@ -52,6 +57,24 @@ a:hover {
   border: 1px solid black;
 }
 
+.sticky-element {
+  position: sticky;
+  top: 10px;
+  left: 100px;
+  width: 500px;
+  height: 100px;
+  border: 3px solid #dfA0df;
+}
+
+.fixed-element {
+  position: fixed;
+  bottom: 150px;
+  left: 100px;
+  width: 100px;
+  height: 100px;
+  border: 3px solid #73AD21;
+}
+
 .big-box{
   width: 100px;
   height: 30px;
@@ -70,7 +93,9 @@ a:hover {
   outline: 3px solid blue;
 }
 
-.small-box3:focus {
+.small-box3:focus,
+.small-box3:focus-within,
+.small-box3:active {
   outline: 3px solid red;
 }
 
@@ -82,7 +107,9 @@ a:hover {
   margin-left: 90px
 }
 
-.looping:focus {
+.looping:focus,
+.looping:focus-within,
+.looping:active {
   position: absolute;
   left: 200px;
 }

@@ -25,6 +25,7 @@ function graph(){
 graph.prototype.make_adj_array = function(direction){
     var focusable = document.body.focusableAreas({'mode': 'all'});
     this.node_num = focusable.length;
+    console.log(this.node_num);
     this.visited = new Array(this.node_num).fill(0);
     var graph = new Array(this.node_num);
     var dir = ["up", "down", "left", "right"];
@@ -376,10 +377,12 @@ function isolation_detector(){
 
 function focus_error_detector(){
   var focusable = document.body.focusableAreas({'mode': 'all'});
-  console.log(focusable);
-  console.log(focusable[29]);
-  focusable[29].focus();
-  console.log(getComputedStyle(focusable[29]).getPropertyValue('outline').trim());
+  setTimeout(function(){
+    focusable[29].focus();
+    console.log(focusable);
+    console.log(focusable[29]);
+    console.log(getComputedStyle(focusable[29]).getPropertyValue('outline').trim());
+  }, 3000); 
 
   // let clearFocusRing = document.getElementsByClassName('small-box3');
   // clearFocusRing[0].focus();
@@ -401,11 +404,11 @@ function non_focusable_button(){
 }
 
 // trap_detector();
-// unreachable_detector();
+unreachable_detector();
 // loop_detector();
 // isolation_detector();
-// focus_error_detector();
-non_focusable_button();
+focus_error_detector();
+// non_focusable_button();
 
 //var hello_to_dev_tool_panel = "hello from graph.js!";
 //hello_to_dev_tool_panel;

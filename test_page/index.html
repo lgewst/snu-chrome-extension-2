@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
   <link rel="stylesheet" href="style.css">
   <!-- 폴리필코드를 명시적으로 실행하려면 아래 줄을 주석해제.  -->
-  <script src="polyfill/spatnav-heuristic.js"></script>
+  <script src="../spatnav-heuristic.js"></script>
   <script type="text/javascript">
     window.addEventListener("load", function() {
       function focus_error_detector(){
@@ -40,8 +40,9 @@
 <body>
   <div class="basic-padding">
     <p>#11 Error</p>
-
     <div class="card-view gold">
+      <div class="sticky-element" tabindex="0"> this is sticky elements~~~~~~ </div>
+
       <h2 tabIndex="0" id="intro">1. Unreachable Case</h2>
 
       Error 1.
@@ -87,13 +88,13 @@
     </div>
 
     <div class="card-view gold">
-      <h2 tabIndex="0" id="intro">3. Trap </h2>
+      <h2 tabIndex="0" id="intro">2. Trap </h2>
       <a target="_blank" href="./trapped.html"> Open trap case </a>
 
     </div>
     <div class="card-view gold">
       <h2 tabIndex="0" id="intro">3. Looping </h2>
-      <div class="small-box looping" tabindex="0" style="background: white"></div>
+      <div class="small-box looping" tabindex="0" style="background: white; margin-left: 100px;"></div>
       <div class="small-box looping" tabindex="0" style="background: gray"></div>
       <br><br><br><br><br><br><br><br>
       <div class="small-box" id="looping-first" tabindex="0" style="background: white"></div>
@@ -117,7 +118,7 @@
       <div class="small-box3" tabindex="0">OK</div>
     </div>
 
-
+    <div class="fixed-element" tabindex="0"> fixed element </div>
     <br>
     <br>
   </div>
