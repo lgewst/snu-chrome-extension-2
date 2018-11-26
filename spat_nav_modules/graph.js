@@ -407,5 +407,8 @@ function non_focusable_button(){
 // focus_error_detector();
 non_focusable_button();
 
-var hello_to_dev_tool_panel = "hello from graph.js!";
-hello_to_dev_tool_panel;
+//var hello_to_dev_tool_panel = "hello from graph.js!";
+//hello_to_dev_tool_panel;
+var focusable = document.body.focusableAreas({'mode': 'all'});
+focusable[0].id;
+["1","2","3"];

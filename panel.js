@@ -1,12 +1,14 @@
 chrome.tabs.executeScript({
-    file: 'dev_test_js.js'
+    file: 'spat_nav_modules/graph.js' //result 는 첫번째 focusable element
 }, function(result){
-    document.querySelector('#result_test').innerText = result;
+	alert(result);
+	var _code = 'document.getElementById("'+result+'").style.background = "orange"'
+	//chrome.tabs.executeScript({code: _code });
+
+	document.querySelector('#result_graph').innerText = _code;
+	document.querySelector('#result_graph').addEventListener('mousemove', function (e) {
+		chrome.tabs.executeScript({code: _code});
+	}, false);
 });
 
-chrome.tabs.executeScript({
-    file: 'spat_nav_modules/graph.js'
-}, function(result){
-    document.querySelector('#result_graph').innerText = result;
-});
 
