@@ -23,9 +23,10 @@ function graph(){
  *
  */
 graph.prototype.make_adj_array = function(direction){
-    var focusable = document.body.focusableAreas({'mode': 'all'});
+    var focusable = document.body.focusableAreas({'mode': 'visible'});
     this.node_num = focusable.length;
     console.log(this.node_num);
+    console.log(focusable);
     this.visited = new Array(this.node_num).fill(0);
     var graph = new Array(this.node_num);
     var dir = ["up", "down", "left", "right"];
@@ -36,13 +37,13 @@ graph.prototype.make_adj_array = function(direction){
         graph[i] = new Array(5);
         graph[i][0] = focusable[i];
         for(var j = 0; j < dir.length; j++){
-          graph[i][j+1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[j],{'mode': 'all'});
+          graph[i][j+1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[j],{'mode': 'visible'});
         }
       }
       else {
         graph[i] = new Array(2);
         graph[i][0] = focusable[i];
-        graph[i][1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[direction-1],{'mode': 'all'});
+        graph[i][1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[direction-1],{'mode': 'visible'});
       }
     }
     return graph;
@@ -127,16 +128,21 @@ graph.prototype.make_rev_adj_list = function(directed_graph){
 // ex> reverse_graph_list[10][1:] = all destination nodes list
 
   var reversed_graph_list = [];
-
+  console.log(directed_graph);
   for (var i = 0; i < directed_graph.length; i++){
     reversed_graph_list.push([directed_graph[i][0]]);
   }
 
   for(var i = 0; i < directed_graph.length; i++){
+    console.log(i);
     for(var j = 1; j < directed_graph[i].length; j++){
+      console.log(directed_graph[i][j].node_id);
+      console.log(reversed_graph_list[directed_graph[i][j].node_id]);
+      console.log(directed_graph[i][0]);
       reversed_graph_list[directed_graph[i][j].node_id].push(directed_graph[i][0]);
     }
   }
+  console.log(reversed_graph_list);
   return reversed_graph_list;
 }
 
@@ -244,7 +250,6 @@ graph.prototype.trap_visualizer = function(border_color){
 	      this.scc[i][j].style.borderColor = border_color
 	      this.scc[i][j].style.borderStyle = "dashed"
 	      this.scc[i][j].style.borderWidth = "2"
-        console.log(this.scc[i][j]);
       }
     }
   }
@@ -315,11 +320,22 @@ graph.prototype.isolation_visualizer = function(border_color){
 function trap_detector(){
   // if(scc.length == 1) return;
   var graph_trap = new graph();
+  var timestamp = new Date().getTime();
   graph_trap.adj_array = graph_trap.make_adj_array(0);
+  var timestamp2 = new Date().getTime();
+  console.log(timestamp2 - timestamp);
   graph_trap.adj_list = graph_trap.make_adj_list(graph_trap.adj_array);
+  var timestamp3 = new Date().getTime();
+  console.log(timestamp3 - timestamp2);
   graph_trap.rev_adj_list = graph_trap.make_rev_adj_list(graph_trap.adj_list);
+  var timestamp4 = new Date().getTime();
+  console.log(timestamp4 - timestamp3);
   graph_trap.make_scc();
+  var timestamp5 = new Date().getTime();
+  console.log(timestamp5 - timestamp4);
   graph_trap.trap_visualizer("yellow")
+  var timestamp6 = new Date().getTime();
+  console.log(timestamp6 - timestamp5);
   return graph_trap.scc
 }
 
@@ -378,10 +394,9 @@ function isolation_detector(){
 function focus_error_detector(){
   var focusable = document.body.focusableAreas({'mode': 'all'});
   setTimeout(function(){
-    focusable[29].focus();
-    console.log(focusable);
-    console.log(focusable[29]);
-    console.log(getComputedStyle(focusable[29]).getPropertyValue('outline').trim());
+    focusable[30].focus();
+    console.log(focusable[30]);
+    console.log(getComputedStyle(focusable[30]).getPropertyValue('outline').trim());
   }, 3000); 
 
   // let clearFocusRing = document.getElementsByClassName('small-box3');
@@ -403,8 +418,20 @@ function non_focusable_button(){
   return result;
 }
 
+function fixed_or_sticky(){
+  var element = document.body.getElementsByTagName("*");
+  var result = [];
+  for (var i = 0; i < element.length; i++){
+    if(getComputedStyle(element[i]).position == "sticky" || getComputedStyle(element[i]).position == "fixed"){
+      result.push(element[i]);
+    }
+  }
+  console.log(result);
+  return result;
+}
+
 // trap_detector();
-unreachable_detector();
+// unreachable_detector();
 // loop_detector();
 // isolation_detector();
 focus_error_detector();
@@ -412,6 +439,6 @@ focus_error_detector();
 
 //var hello_to_dev_tool_panel = "hello from graph.js!";
 //hello_to_dev_tool_panel;
-var focusable = document.body.focusableAreas({'mode': 'all'});
-focusable[0].id;
-["1","2","3"];
+// var focusable = document.body.focusableAreas({'mode': 'all'});
+// focusable[0].id;
+// ["1","2","3"];
