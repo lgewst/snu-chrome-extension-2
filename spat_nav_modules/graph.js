@@ -447,7 +447,9 @@ function iframe_detector(){
   return result;
 }
 
-
+function hover_detector(){
+  var element = document.body.getElementsByTagName("hover");
+}
 
 // trap_detector();
 // unreachable_detector();
