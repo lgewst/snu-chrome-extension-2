@@ -8,6 +8,7 @@ function graph(){
   this.visited;
   this.stack = [];
   this.scc_visited = [];
+  this.result = [];
 }
 
 /* A fuction that makes a data structure of Graph.
@@ -242,14 +243,15 @@ graph.prototype.condensation = function(){
 
 graph.prototype.trap_visualizer = function(border_color){
   for(var i = 0; i < this.scc.length; i++){
-    if(!this.scc[i][0].length){
+    if(this.scc.length != 1 && !this.scc[i][0].length){
       console.log("trap elements");
       for(var j = 1; j < this.scc[i].length; j++){
-        this.scc[i][j].style.backgroundColor = "#FDFF47"
-	      this.scc[i][j].style.color = "#47e0ff"
-	      this.scc[i][j].style.borderColor = border_color
-	      this.scc[i][j].style.borderStyle = "dashed"
-	      this.scc[i][j].style.borderWidth = "2"
+        // this.scc[i][j].style.backgroundColor = "#FDFF47"
+	      // this.scc[i][j].style.color = "#47e0ff"
+	      // this.scc[i][j].style.borderColor = border_color
+	      // this.scc[i][j].style.borderStyle = "dashed"
+        // this.scc[i][j].style.borderWidth = "2"
+        this.result.push(this.scc[i][j]);
       }
     }
   }
@@ -260,12 +262,13 @@ graph.prototype.loop_visualizer = function(border_color){
     if(this.scc[i][0].length>=2){
       console.log("loop elements");
       for(var j = 1; j < this.scc[i].length; j++){
-        this.scc[i][j].style.backgroundColor = "#FDFF47"
-	      this.scc[i][j].style.color = "#47e0ff"
-	      this.scc[i][j].style.borderColor = border_color
-	      this.scc[i][j].style.borderStyle = "dashed"
-	      this.scc[i][j].style.borderWidth = "2"
-        console.log(this.scc[i][j]);
+        // this.scc[i][j].style.backgroundColor = "#FDFF47"
+	      // this.scc[i][j].style.color = "#47e0ff"
+	      // this.scc[i][j].style.borderColor = border_color
+	      // this.scc[i][j].style.borderStyle = "dashed"
+	      // this.scc[i][j].style.borderWidth = "2"
+        // console.log(this.scc[i][j]);
+        this.result.push(this.scc[i][j]);
       }
     }
   }
@@ -286,12 +289,13 @@ graph.prototype.unreachable_visualizer = function(border_color){
 graph.prototype.unreachable_dfs = function(scc_id, border_color){
   this.scc_visited[scc_id] = 1;
   for(var j = 1; j < this.scc[scc_id].length; j++){
-    this.scc[scc_id][j].style.backgroundColor = "#FDFF47"
-    this.scc[scc_id][j].style.color = "#47e0ff"
-    this.scc[scc_id][j].style.borderColor = border_color
-    this.scc[scc_id][j].style.borderStyle = "dashed"
-    this.scc[scc_id][j].style.borderWidth = "2"
-    console.log(this.scc[scc_id][j]);
+    // this.scc[scc_id][j].style.backgroundColor = "#FDFF47"
+    // this.scc[scc_id][j].style.color = "#47e0ff"
+    // this.scc[scc_id][j].style.borderColor = border_color
+    // this.scc[scc_id][j].style.borderStyle = "dashed"
+    // this.scc[scc_id][j].style.borderWidth = "2"
+    this.result.push(this.scc[scc_id][j]);
+    // console.log(this.scc[scc_id][j]);
   }
   for(var i = 0; i < this.rev_scc[scc_id].length; i++){
     if(!this.scc_visited[scc_id]){
@@ -305,12 +309,13 @@ graph.prototype.isolation_visualizer = function(border_color){
     if(!this.scc[i][0].length && !this.rev_scc[i].length){
       console.log("isolated elements")
       for(var j = 1; j < this.scc[i].length; j++){
-	      this.scc[i][j].style.backgroundColor = "#FDFF47"
-	      this.scc[i][j].style.color = "#47e0ff"
-	      this.scc[i][j].style.borderColor = border_color
-	      this.scc[i][j].style.borderStyle = "dashed"
-        this.scc[i][j].style.borderWidth = "2"
-        console.log(this.scc[i][j]);
+	      // this.scc[i][j].style.backgroundColor = "#FDFF47"
+	      // this.scc[i][j].style.color = "#47e0ff"
+	      // this.scc[i][j].style.borderColor = border_color
+	      // this.scc[i][j].style.borderStyle = "dashed"
+        // this.scc[i][j].style.borderWidth = "2"
+        // console.log(this.scc[i][j]);
+        this.result.push(this.scc[i][j]);
       }
     }
   }
@@ -393,15 +398,65 @@ function isolation_detector(){
 
 function focus_error_detector(){
   var focusable = document.body.focusableAreas({'mode': 'all'});
+  var result = [];
   setTimeout(function(){
-    focusable[30].focus();
-    console.log(focusable[30]);
-    console.log(getComputedStyle(focusable[30]).getPropertyValue('outline').trim());
-  }, 3000); 
+    for(var i = 0; i < focusable.length; i++){
+      var outline_color = getComputedStyle(focusable[i]).outlineColor;
+      var border_color = getComputedStyle(focusable[i]).borderColor;
+      var background_color = getComputedStyle(focusable[i]).backgroundColor;
 
+      focusable[i].focus();
+      var focused_outline_color = getComputedStyle(focusable[i]).outlineColor;
+      var focused_outline_width = getComputedStyle(focusable[i]).outlineWidth;
+      if(outline_color == focused_outline_color){
+        result.push(focusable[i]);
+      }
+      else if(border_color == focused_outline_color){
+        result.push(focusable[i]);
+        break;
+      }
+      else if(background_color == focused_outline_color){
+        result.push(focusable[i]);
+        break;
+      }
+      else if(focused_outline_width.substring(0, focused_outline_width.length-2) < 1){
+        result.push(focusable[i]);
+        break;
+      }
+    }
+    console.log(result);
+  }, 3000); 
+  return result;
   // let clearFocusRing = document.getElementsByClassName('small-box3');
   // clearFocusRing[0].focus();
   // console.log(getComputedStyle(clearFocusRing[0]).getPropertyValue(`outline`).trim());
+}
+
+function outline_detector(outline, focused_outline){
+  var property_outline = property_extractor(outline);
+  var property_focused_outline = property_extractor(focused_outline);
+  if(property_outline[0] == property_focused_outline[0]){
+    return true;
+  }
+  else if(property_focused_outline[1] == "none"){
+    return true;
+  }
+  else if(property_focused_outline[1].getComputedStyle("background") == "none"){
+    return true;
+  }
+  else if(parseInt(property_focused_outline[2]) < 1){
+    return true;
+  }
+}
+
+function property_extractor(outline){
+  var str1 = outline.substring(4,);
+  var str2 = str1.split(',');
+  var str3 = str2.split(' ');
+  var rgb = [str3[0].substring(0, str3[0].length-1), str3[1].substring(0, str3[1].length-1), str[2].substring(0, str3[2].length-1)];
+  var border_style = str[4];
+  var px = str[5].substring(0, str3[0].length-2);
+  return [rgb, border_style, px];
 }
 
 function non_focusable_button(){
