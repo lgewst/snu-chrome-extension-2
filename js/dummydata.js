@@ -22,7 +22,6 @@ chrome.tabs.executeScript({
     {
     unreachable_elements += result[0][i] + "<br>";
     }
-
     dummyData["What is unreachable element"] = "<h1>Unreachable elements are the elements in this webpage which is not able to be reached with spatial Navigation Search.</h1>"
     dummyData["Unreachable elements"] = "<h2>Unreachable elements</h2>"+unreachable_elements;
 	
