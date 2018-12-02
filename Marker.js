@@ -1,4 +1,3 @@
-console.log("Hello from Mark v.2");
 // Unique ID for the className.
 var MOUSE_VISITED_CLASSNAME = 'crx_mouse_visited';
 
@@ -23,6 +22,6 @@ document.addEventListener('mousemove', function (e) {
 		// The current element is now the previous. So we can remove the class
 		// during the next iteration.
 		prevDOM = srcElement;
-		console.info(srcElement.currentSrc);
-		console.dir(srcElement);
+//		console.info(srcElement.currentSrc);
+//		console.dir(srcElement);
 }, false);

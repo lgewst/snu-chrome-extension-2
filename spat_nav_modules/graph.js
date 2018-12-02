@@ -455,10 +455,35 @@ function hover_detector(){
 // unreachable_detector();
 // loop_detector();
 // isolation_detector();
-iframe_detector();
-focus_error_detector();
+//focus_error_detector();
+//iframe_detector();
+//focus_error_detector();
 // non_focusable_button();
 
+var hello = "Hello from graph.js";
+hello;
+
+[1,2,3,4,5];
+["1","2","3"];
+
+var res = document.body.focusableAreas({'mode': 'all'});
+var res_arr = Array();
+for(i=0; i<res.length; i++){
+	res_arr[i] = res[i].id;
+}
+res_arr;
+
+/*
+var dict = [];
+dict["name"]="HYUNSUN";
+dict;
+["H","Y","U"];
+
+var res = unreachable_detector().adj_list[0]
+alert("res lenght"+ res.length");
+res;
+["H","Y","U"];
+*/
 //var hello_to_dev_tool_panel = "hello from graph.js!";
 //hello_to_dev_tool_panel;
 // var focusable = document.body.focusableAreas({'mode': 'all'});
