@@ -449,16 +449,6 @@ function outline_detector(outline, focused_outline){
   }
 }
 
-function property_extractor(outline){
-  var str1 = outline.substring(4,);
-  var str2 = str1.split(',');
-  var str3 = str2.split(' ');
-  var rgb = [str3[0].substring(0, str3[0].length-1), str3[1].substring(0, str3[1].length-1), str[2].substring(0, str3[2].length-1)];
-  var border_style = str[4];
-  var px = str[5].substring(0, str3[0].length-2);
-  return [rgb, border_style, px];
-}
-
 function non_focusable_button(){
   var element = document.body.getElementsByTagName("*");
   var result = [];
