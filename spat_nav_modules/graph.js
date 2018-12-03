@@ -31,30 +31,30 @@ function graph(){
  *
  */
 graph.prototype.make_adj_array = function(direction){
-    var focusable = document.body.focusableAreas({'mode': 'visible'});
-    this.node_num = focusable.length;
-    console.log(this.node_num);
-    console.log(focusable);
-    this.visited = new Array(this.node_num).fill(0);
-    var graph = new Array(this.node_num);
-    var dir = ["up", "down", "left", "right"];
+  var focusable = document.body.focusableAreas({'mode': 'all'});
+  this.node_num = focusable.length;
+  console.log(this.node_num);
+  console.log(focusable);
+  this.visited = new Array(this.node_num).fill(0);
+  var graph = new Array(this.node_num);
+  var dir = ["up", "down", "left", "right"];
 
-    for(var i = 0; i < this.node_num; i++){
-      focusable[i].node_id = i
-      if(!direction){
-        graph[i] = new Array(5);
-        graph[i][0] = focusable[i];
-        for(var j = 0; j < dir.length; j++){
-          graph[i][j+1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[j],{'mode': 'visible'});
-        }
-      }
-      else {
-        graph[i] = new Array(2);
-        graph[i][0] = focusable[i];
-        graph[i][1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[direction-1],{'mode': 'visible'});
+  for(var i = 0; i < this.node_num; i++){
+    focusable[i].node_id = i
+    if(!direction){
+      graph[i] = new Array(5);
+      graph[i][0] = focusable[i];
+      for(var j = 0; j < dir.length; j++){
+        graph[i][j+1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[j],{'mode': 'all'});
       }
     }
-    return graph;
+    else {
+      graph[i] = new Array(2);
+      graph[i][0] = focusable[i];
+      graph[i][1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[direction-1],{'mode': 'all'});
+    }
+  }
+  return graph;
 }
 
 
@@ -89,8 +89,7 @@ graph.prototype.remove_redundancy_in_array = function(input_array){
 
  // To use this function the html code should import JQuery as below.
  // <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-
- graph.prototype.make_adj_list = function(arrow_graph){
+graph.prototype.make_adj_list = function(arrow_graph){
 
   var directed_graph = [];
 
@@ -154,8 +153,7 @@ graph.prototype.make_rev_scc = function(scc){
   this.rev_scc = rev_scc;
 }
 
-/*
- * SCC(Strong Conected Component) with DFS
+/* SCC(Strong Conected Component) with DFS
  * scc[i][0] contains edges.
  * (e.g : scc[0][0] == [1,2] means scc[0] has directed edges to scc[1], scc[2])
  * scc[i][j] (j >= 1) is a node of scc.
@@ -236,7 +234,6 @@ graph.prototype.condensation = function(){
     })
   }
 }
-
 
 graph.prototype.detect_trap = function(border_color){
   for(var i = 0; i < this.scc.length; i++){
