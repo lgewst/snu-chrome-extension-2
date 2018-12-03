@@ -11,8 +11,15 @@ function graph(){
   this.result = [];
 }
 
-/* A fuction that makes a data structure of Graph.
+/* A fuction that makes a data structure of Graph. 
  *
+ * Argument
+ * 0 : all directions
+ * 1 : up
+ * 2 : down
+ * 3 : left
+ * 4 : right
+ * 
  * Two dimensional array
  *
  * Row
