@@ -44,3 +44,18 @@ starting point가 어디냐에 따라 unreachable element가 바뀔 수 있다. 
 고립되어있는 SCC는 해당 SCC내에서는 자유롭게 움직일 수 있지만 다른 SCC로 넘어 갈 수 없다. unreachable과는 다르게 우연히 isolated SCC에 focus가 갔을 때, 키보드로는 다른 SCC로 넘어 갈 방법이 없는 것을 상정하였다.
 
 현재 구현 중이며 거의 다 만든 상태. 이것 역시 시작점에 따라 detect되는 SCC가 달라질 수 있다.
+
+### focus_error_detector
+focus가 가능한 element에 대해서 focus ring이 명확하지 않은 경우를 탐지한다.
+focus ring의 색깔을 기존의 outline, border, background와 비교하여 차이가 적으면 에러로 탐지한다.
+또한 focus ring 두께가 1px미만인 경우에도 사람 눈에 보이기 힘들다고 판단하여 에러로 탐지한다.
+
+### non_focusable_button_detector
+clickable하거나 마우스로는 event를 발생시킬 수 있지만, 키보드로는 접근 불가능한 경우를 탐지한다.
+
+### fixed_sticky_detector
+fixed element와 sticky element를 탐지한다.
+
+### iframe_detector
+iframe의경우 html내의 html로써, 에러를 유발시킬 가능성이 크다.
+
