@@ -34,7 +34,34 @@
 			gridWrapper.innerHTML = '';
 			classie.add(gridWrapper, 'content--loading');
 			setTimeout(function() {
-				classie.remove(gridWrapper, 'content--loading');
-				gridWrapper.innerHTML = '<ul class="products">' + dummyData[itemName] + '<ul>';
+				String.prototype.replaceAll = function(org, dest) {
+				return this.split(org).join(dest);
+				}
+
+				var tmp;
+				if (itemName in dummyData){
+					classie.remove(gridWrapper, 'content--loading');
+					gridWrapper.innerHTML = '<ul class="products">' + dummyData[itemName] + '<ul>';
+				} else {
+					var detector = itemName.replaceAll(" ","_").toLowerCase();
+					var detector_file_path = "spat_nav_modules/"+detector+"_detector.js";
+					//alert(detector_file_path);
+					chrome.tabs.executeScript({ file: detector_file_path}, 
+							    function(result){
+
+							    var contents = "";
+
+							    for (i = 0; i < result[0].length; i++)
+							    {
+							    contents += "<xmp>\""+result[0][i] + "\"</xmp><br>";
+							    }
+	
+							    dummyData[itemName] = "<h2>"+itemName+"</h2>"+ contents;
+							    classie.remove(gridWrapper, 'content--loading');
+							    gridWrapper.innerHTML = '<ul class="products">' + dummyData[itemName] + '<ul>';
+
+							    }
+						);
+			 	}
 			}, 700);
 		}

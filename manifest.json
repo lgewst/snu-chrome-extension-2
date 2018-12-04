@@ -15,7 +15,7 @@
     "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*", "file:///*"],
-      "js": ["spatnav-heuristic.js","jquery-3.3.1.min.js","Marker.js"],
+      "js": ["spatnav-heuristic.js","jquery-3.3.1.min.js","Marker.js", "spat_nav_modules/graph.js"],
       "css": ["Marker.css"],
       "run_at": "document_end",
       "all_frames": true
