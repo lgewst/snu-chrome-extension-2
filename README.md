@@ -4,16 +4,13 @@
 
 1. `git clone https://github.com/lgewst/snu-chrome-extension-2.git` 으로 받은 다음에 chrome 설정 => 도구 더보기 => 확장프로그램.
 1. 압축해제된 확장프로그램을 로드합니다 click => clone한 folder click => 확인.
-1. UI는 만들지 않은 상태로, spat_nav_modules/graph.js 를 열고 373 ~ 376줄의 코드를 디텍터를 주석 해제하면 해당 detector가 활성화된다. 그리고 26라인의 `'visible'`, `'all'`을 바꾸면서 테스트 할 수 있다.
-1. chrome에서 우클릭 => 검사를 누르면 해당 detector가 작동하고, detector에 감지된 element들은 노란색으로 highlight된다.
-1. 아직 UI가 완전치 않아 한번 highlight된 것은 refresh를 하여서 원상태로 만들고, 다른 detctor를 확인하고 싶은경우 3~4를 반복한다.
+1. chrome에서 우클릭 => 검사를 누르고 spat_nav탭에 들어가면 UI를 볼 수 있다.
+1. UI에서 각각의 detector를 누르면 검사를 실행하고 해당 요소들을 출력함.
 
 ## SCC (Strongly Connected Component)
 1. 같은 SCC 내에 속하는 임의의 서로 다른 두 정점은 서로 도달 가능하다.
 1. 어떤 정점이나 간선도 1의 조건을 만족하면서 이 SCC에 추가될 수 없다.(최대부분집합)
 1. SCC를 node로 보았을 때, edge들이 condensation된 상태에서 DAG형태로 변환 할 수 있다.
-
-## current state
 
 - focusable element의 directed graph를 SCC를 이용하여 DAG를 그리면 topological order로 정렬할 수 있다.
 이렇게 만든 SCC를 가지고서 각종 error를 탐지하고 리포트를 한다.
@@ -43,8 +40,6 @@ starting point가 어디냐에 따라 unreachable element가 바뀔 수 있다. 
 
 고립되어있는 SCC는 해당 SCC내에서는 자유롭게 움직일 수 있지만 다른 SCC로 넘어 갈 수 없다. unreachable과는 다르게 우연히 isolated SCC에 focus가 갔을 때, 키보드로는 다른 SCC로 넘어 갈 방법이 없는 것을 상정하였다.
 
-현재 구현 중이며 거의 다 만든 상태. 이것 역시 시작점에 따라 detect되는 SCC가 달라질 수 있다.
-
 ### focus_error_detector
 focus가 가능한 element에 대해서 focus ring이 명확하지 않은 경우를 탐지한다.
 focus ring의 색깔을 기존의 outline, border, background와 비교하여 차이가 적으면 에러로 탐지한다.
@@ -55,7 +50,9 @@ clickable하거나 마우스로는 event를 발생시킬 수 있지만, 키보�
 
 ### fixed_sticky_detector
 fixed element와 sticky element를 탐지한다.
+이런 요소들은 element간의 상대적인 위치를 변화시키기 때문에 spat_nav에 혼란을 줄 수 있다.
+따라서 warning을 띄우도록 한다.
 
 ### iframe_detector
-iframe의경우 html내의 html로써, 에러를 유발시킬 가능성이 크다.
-
+iframe의경우 html내의 html로써 iframe도 하나의 element이면서 내부의 element를 가지고 있는 상태이다.
+이런 경우에 예상과는 다르게 작동할 가능성이 존재하여, warning을 띄우도록 한다.
