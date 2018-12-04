@@ -16,6 +16,7 @@
 이렇게 만든 SCC를 가지고서 각종 error를 탐지하고 리포트를 한다.
 - 코사라주 알고리즘을 이용하여 SCC를 만들었으며 O(V+E), Condensation은 찾을 수 없어서 직접 구현하였다 O(V+E).
 
+## Detectors with SCC
 ### trap detector
 topological order로 정렬된 SCC에서, 나가는 방향의 edge가 없는 SCC는 trap으로 간주 할 수 있다.
 
@@ -40,6 +41,8 @@ starting point가 어디냐에 따라 unreachable element가 바뀔 수 있다. 
 
 고립되어있는 SCC는 해당 SCC내에서는 자유롭게 움직일 수 있지만 다른 SCC로 넘어 갈 수 없다. unreachable과는 다르게 우연히 isolated SCC에 focus가 갔을 때, 키보드로는 다른 SCC로 넘어 갈 방법이 없는 것을 상정하였다.
 
+## Other detectors
+
 ### focus_error_detector
 focus가 가능한 element에 대해서 focus ring이 명확하지 않은 경우를 탐지한다.
 focus ring의 색깔을 기존의 outline, border, background와 비교하여 차이가 적으면 에러로 탐지한다.
@@ -56,3 +59,8 @@ fixed element와 sticky element를 탐지한다.
 ### iframe_detector
 iframe의경우 html내의 html로써 iframe도 하나의 element이면서 내부의 element를 가지고 있는 상태이다.
 이런 경우에 예상과는 다르게 작동할 가능성이 존재하여, warning을 띄우도록 한다.
+
+## UI templete.
+### License
+http://tympanus.net/codrops/licensing/
+Thanks to tympanus for the templete.
