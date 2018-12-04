@@ -45,7 +45,9 @@ starting point가 어디냐에 따라 unreachable element가 바뀔 수 있다. 
 
 ### focus_error_detector
 focus가 가능한 element에 대해서 focus ring이 명확하지 않은 경우를 탐지한다.
+
 focus ring의 색깔을 기존의 outline, border, background와 비교하여 차이가 적으면 에러로 탐지한다.
+
 또한 focus ring 두께가 1px미만인 경우에도 사람 눈에 보이기 힘들다고 판단하여 에러로 탐지한다.
 
 ### non_focusable_button_detector
@@ -53,14 +55,18 @@ clickable하거나 마우스로는 event를 발생시킬 수 있지만, 키보�
 
 ### fixed_sticky_detector
 fixed element와 sticky element를 탐지한다.
+
 이런 요소들은 element간의 상대적인 위치를 변화시키기 때문에 spat_nav에 혼란을 줄 수 있다.
+
 따라서 warning을 띄우도록 한다.
 
 ### iframe_detector
 iframe의경우 html내의 html로써 iframe도 하나의 element이면서 내부의 element를 가지고 있는 상태이다.
+
 이런 경우에 예상과는 다르게 작동할 가능성이 존재하여, warning을 띄우도록 한다.
 
 ## UI templete.
 ### License
 http://tympanus.net/codrops/licensing/
+
 Thanks to tympanus for the templete.
