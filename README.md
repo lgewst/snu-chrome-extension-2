@@ -56,7 +56,7 @@ clickable하거나 마우스로는 event를 발생시킬 수 있지만, 키보�
 ### fixed_sticky_detector
 fixed element와 sticky element를 탐지한다.
 
-이런 요소들은 element간의 상대적인 위치를 변화시키기 때문에 spat_nav에 혼란을 줄 수 있다.
+이런 요소들은 element간의 상대적인 위치를 변화시키기 때문에 spat_nav에 혼란을 줄 수 있고, z-index가 다른 경우에 가려져서 focus ring이 안보이는 경우가 발생한다.
 
 따라서 warning을 띄우도록 한다.
 

@@ -1,4 +1,5 @@
 function graph(){
+  this.focusable =[];
   this.adj_array = this.make_adj_array();
   this.adj_list = [];
   this.rev_adj_list = [];
@@ -8,6 +9,7 @@ function graph(){
   this.visited;
   this.stack = [];
   this.scc_visited = [];
+  this.valid = true;
   this.result = [];
 }
 
@@ -31,27 +33,29 @@ function graph(){
  *
  */
 graph.prototype.make_adj_array = function(direction){
-  var focusable = document.body.focusableAreas({'mode': 'all'});
-  this.node_num = focusable.length;
-  console.log(this.node_num);
-  console.log(focusable);
+  this.focusable = document.body.focusableAreas({'mode': 'all'});
+  this.node_num = this.focusable.length;
   this.visited = new Array(this.node_num).fill(0);
   var graph = new Array(this.node_num);
   var dir = ["up", "down", "left", "right"];
 
-  for(var i = 0; i < this.node_num; i++){
-    focusable[i].node_id = i
-    if(!direction){
+  if(direction == "all"){ // direction == 0 means all directions
+    for(var i = 0; i < this.node_num; i++){
+      this.focusable[i].node_id = i // assign node_id to focusable elements.
       graph[i] = new Array(5);
-      graph[i][0] = focusable[i];
+      graph[i][0] = this.focusable[i]; // [0] for origin
       for(var j = 0; j < dir.length; j++){
         graph[i][j+1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[j],{'mode': 'all'});
       }
     }
-    else {
+  }
+  else {
+    var dir_index = dir.indexOf(direction);
+    for(var i = 0; i < this.node_num; i++){
+      this.focusable[i].node_id = i
       graph[i] = new Array(2);
-      graph[i][0] = focusable[i];
-      graph[i][1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[direction-1],{'mode': 'all'});
+      graph[i][0] = this.focusable[i];
+      graph[i][1] = window.__spatialNavigation__.findNextTarget(graph[i][0],dir[dir_index],{'mode': 'all'});
     }
   }
   return graph;
@@ -121,12 +125,17 @@ graph.prototype.make_rev_adj_list = function(directed_graph){
   var reversed_graph_list = [];
 
   for (var i = 0; i < directed_graph.length; i++){
-    reversed_graph_list.push([directed_graph[i][0]]);
+    reversed_graph_list.push([directed_graph[i][0]]); // make a array of rev_graph in same order with directed_graph
   }
 
   for(var i = 0; i < directed_graph.length; i++){
     for(var j = 1; j < directed_graph[i].length; j++){
-      reversed_graph_list[directed_graph[i][j].node_id].push(directed_graph[i][0]);
+      if(directed_graph[i][j].node_id == undefined){
+        this.valid = false;
+        console.log(i, j, directed_graph);
+        return;
+      }
+      reversed_graph_list[directed_graph[i][j].node_id].push(directed_graph[i][0]); //push elements into rev_graph.
     }
   }
   return reversed_graph_list;
@@ -158,6 +167,8 @@ graph.prototype.make_rev_scc = function(scc){
  * (e.g : scc[0][0] == [1,2] means scc[0] has directed edges to scc[1], scc[2])
  * scc[i][j] (j >= 1) is a node of scc.
  * scc[i][1], scc[i][2], scc[i][3] ... are nodes that belong to scc[i]
+ * 
+ * reference : https://en.wikipedia.org/wiki/Kosaraju%27s_algorithm
  * 
  */
 graph.prototype.make_scc = function(){
@@ -211,7 +222,7 @@ graph.prototype.rev_dfs = function(node_id){
   }
 }
 
-/* A fuction that condense redundant edges of scc.
+/* A fuction that condenses redundant edges of scc.
  * 
  */
 graph.prototype.condensation = function(){
@@ -235,75 +246,69 @@ graph.prototype.condensation = function(){
   }
 }
 
-graph.prototype.detect_trap = function(border_color){
+graph.prototype.detect_trap = function(){
+  var result = [];
   for(var i = 0; i < this.scc.length; i++){
     if(this.scc.length != 1 && !this.scc[i][0].length){
       console.log("trap elements");
       for(var j = 1; j < this.scc[i].length; j++){
-        this.result.push(this.scc[i][j]);
+        result.push(this.scc[i][j]);
       }
     }
   }
+  return result;
 }
 
-graph.prototype.detect_loop = function(border_color){
+graph.prototype.detect_loop = function(){
+  var result = [];
   for(var i = 0; i < this.scc.length; i++){
     if(this.scc[i][0].length>=2){
       console.log("loop elements");
       for(var j = 1; j < this.scc[i].length; j++){
-        this.result.push(this.scc[i][j]);
+        result.push(this.scc[i][j]);
       }
     }
   }
+  return result;
 }
 
 /* A fuction that detect unreachable elements 
  * Assume that someone push "down" button at current screen.
  * 
  */
-graph.prototype.detect_unreachable = function(border_color){
+graph.prototype.detect_unreachable = function(){
   this.scc_visited = new Array(this.scc.length);
-  //var index = document.body.spatialNavigationSearch("down");
-  var index = this.adj_list[0].scc_id;
+  var index = this.adj_list[this.focusable.indexOf(document.body.spatialNavigationSearch("down"))].scc_id;
+  // var index = this.adj_list[0].scc_id;
   console.log("unreachable elements")
   for(var i = 0; i < this.rev_scc[index].length; i++){
-    this.unreachable_dfs(this.rev_scc[index][i], border_color);
+    this.unreachable_dfs(this.rev_scc[index][i]);
   }
+  console.log(this.result);
+  return this.result;
 }
 
-graph.prototype.unreachable_dfs = function(scc_id, border_color){
+graph.prototype.unreachable_dfs = function(scc_id){
   this.scc_visited[scc_id] = 1;
   for(var j = 1; j < this.scc[scc_id].length; j++){
     this.result.push(this.scc[scc_id][j]);
   }
   for(var i = 0; i < this.rev_scc[scc_id].length; i++){
     if(!this.scc_visited[scc_id]){
-      this.unreachable_dfs(this.rev_scc[scc_id][i], border_color)
+      this.unreachable_dfs(this.rev_scc[scc_id][i])
     }
   }
 }
 
-graph.prototype.isolation_visualizer = function(border_color){
+graph.prototype.detect_isolation = function(){
+  var result = [];
   for(var i = 0; i < this.scc.length; i++){
     if(!this.scc[i][0].length && !this.rev_scc[i].length){
       console.log("isolated elements")
       for(var j = 1; j < this.scc[i].length; j++){
-        this.result.push(this.scc[i][j]);
+        result.push(this.scc[i][j]);
       }
     }
   }
+  return result;
 }
-
-
-
-
-
-// trap_detector();
-// unreachable_detector();
-// loop_detector();
-// isolation_detector();
-// focus_error_detector();
-// iframe_detector();
-// focus_error_detector();
-// non_focusable_button();
-// fixed_sticky_detector()
