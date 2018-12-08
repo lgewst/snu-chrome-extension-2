@@ -31,9 +31,6 @@
 			<div class="bp-header__main">
 				<span class="bp-header__present">Spatial Navigation<span class="bp-tooltip bp-icon bp-icon--about" data-content="Accessibility engine for automated testing HTML-based user interface in terms of Spatial Navigation Program"></span></span>
 				<h1 class="bp-header__title">Accessibility Testing Engine</h1>
-				<nav class="bp-nav">
-					<a class="bp-nav__item bp-icon bp-icon--prev" href="http://tympanus.net/Blueprints/PageStackNavigation/" data-info="Run Testing Engine"><span>Run Spat-Nav Error Detecting Engine</span></a>
-				</nav>
 			</div>
 		</header>
 		<button class="action action--open" aria-label="Open Menu"><span class="icon icon--menu"></span></button>
@@ -44,14 +41,70 @@
 					<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-1" aria-owns="submenu-1" href="#">Unreachable Detector</a></li>
 					<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-2" aria-owns="submenu-2" href="#">Trap Detector</a></li>
 					<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-3" aria-owns="submenu-3" href="#">Loop Detector</a></li>
-					<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-4" aria-owns="submenu-3" href="#">Isolation Detector</a></li>
-					<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-5" aria-owns="submenu-3" href="#">Focus Error Detector</a></li>
+					<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-4" aria-owns="submenu-4" href="#">Isolation Detector</a></li>
+					<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-5" aria-owns="submenu-5" href="#">Focus Error Detector</a></li>
+					<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-6" aria-owns="submenu-6" href="#">Iframe Error Detector</a></li>
+					<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-7" aria-owns="submenu-7" href="#">Non Focusable Detector</a></li>
+					<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-8" aria-owns="submenu-8" href="#">Fixed Sticky Detector</a></li>
+
+
 				</ul>
 				<!-- Submenu 1 -->
 				<ul data-menu="submenu-1" id="submenu-1" class="menu__level" tabindex="-1" role="menu" aria-label="Unreachable Detector">
 					<li class="menu__item" role="menuitem"><a class="menu__link" href="#">What is unreachable element</a></li>
 					<li class="menu__item" role="menuitem"><a class="menu__link" href="#">Unreachable elements</a></li>
 				</ul>
+
+				<!-- Submenu 2 -->
+				<ul data-menu="submenu-2" id="submenu-2" class="menu__level" tabindex="-1" role="menu" aria-label="Trap Detector">
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">What is Trap element</a></li>
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">Trap elements</a></li>
+				</ul>
+
+
+				<!-- Submenu 3 -->
+				<ul data-menu="submenu-3" id="submenu-3" class="menu__level" tabindex="-1" role="menu" aria-label="Loop Detector">
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">What is Loop element</a></li>
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">Loop elements</a></li>
+				</ul>
+
+
+
+				<!-- Submenu 4 -->
+				<ul data-menu="submenu-4" id="submenu-4" class="menu__level" tabindex="-1" role="menu" aria-label="Isolation Detector">
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">What is Isolation element</a></li>
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">Isolation elements</a></li>
+				</ul>
+
+
+				<!-- Submenu 5 -->
+				<ul data-menu="submenu-5" id="submenu-5" class="menu__level" tabindex="-1" role="menu" aria-label="Focus Error Detector">
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">What is Focus Error element</a></li>
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">Focus Error elements</a></li>
+				</ul>
+
+
+				<!-- Submenu 6 -->
+				<ul data-menu="submenu-6" id="submenu-6" class="menu__level" tabindex="-1" role="menu" aria-label="Iframe Error Detector">
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">What is Iframe Error element</a></li>
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">Iframe Error elements</a></li>
+				</ul>
+
+
+				<!-- Submenu 7 -->
+				<ul data-menu="submenu-7" id="submenu-7" class="menu__level" tabindex="-1" role="menu" aria-label="Non Focusable Detector">
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">What is Non Focusable element</a></li>
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">Non Focusable elements</a></li>
+				</ul>
+
+
+				<!-- Submenu 8 -->
+				<ul data-menu="submenu-8" id="submenu-8" class="menu__level" tabindex="-1" role="menu" aria-label="Fixed Sticky Detector">
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">What is Fixed Sticky element</a></li>
+				<li class="menu__item" role="menuitem"><a class="menu__link" href="#">Fixed Sticky elements</a></li>
+				</ul>
+
+
 			</div>
 		</nav>
 		<div class="content">
@@ -61,7 +114,7 @@
 	</div>
 	<!-- /view -->
 	<script src="js/classie.js"></script>
-	<script src="js/dummydata.js"></script>
+	<script src="js/dummydata.js"></script> 
 	<script src="js/main.js"></script>
 	<script src="js/index.js"></script>
 </body>
