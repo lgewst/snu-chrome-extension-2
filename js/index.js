@@ -54,14 +54,11 @@
 								if(result < 0){ contents = "iframe error!"}
 								else{
 							    	for (i = 0; i < result[0].length; i++)
-									{
-									contents += "<xmp>\""+result[0][i] + "\"</xmp><br>";
-									}
+									{contents += "<xmp>\""+result[0][i] + "\"</xmp><br>";}
 								}
 									dummyData[itemName] = "<h2>"+itemName+"</h2>"+ contents;
 									classie.remove(gridWrapper, 'content--loading');
 									gridWrapper.innerHTML = '<ul class="products">' + dummyData[itemName] + '<ul>';
-
 								}
 								
 						);
