@@ -4,7 +4,7 @@ function trap_detector(){
   graph_trap.adj_array = graph_trap.make_adj_array("all");
   graph_trap.adj_list = graph_trap.make_adj_list(graph_trap.adj_array);
   graph_trap.rev_adj_list = graph_trap.make_rev_adj_list(graph_trap.adj_list);
-  if(!graph_trap.valid) return "detector cannot work in this page due to iframes"
+  if(!graph_trap.valid) return -1;
   graph_trap.make_scc();
   return graph_trap.detect_trap();
 }
@@ -14,21 +14,21 @@ function loop_detector(){
   graph_loop_up.adj_array = graph_loop_up.make_adj_array("up");
   graph_loop_up.adj_list = graph_loop_up.make_adj_list(graph_loop_up.adj_array);
   graph_loop_up.rev_adj_list = graph_loop_up.make_rev_adj_list(graph_loop_up.adj_list);
-  if(!graph_loop_up.valid) return "detector cannot work in this page due to iframes"
+  if(!graph_loop_up.valid) return -1
   graph_loop_up.make_scc();
 
   var graph_loop_down = new graph();
   graph_loop_down.adj_array = graph_loop_down.make_adj_array("down");
   graph_loop_down.adj_list = graph_loop_down.make_adj_list(graph_loop_down.adj_array);
   graph_loop_down.rev_adj_list = graph_loop_down.make_rev_adj_list(graph_loop_down.adj_list);
-  if(!graph_loop_down.valid) return "detector cannot work in this page due to iframes"
+  if(!graph_loop_down.valid) return -1
   graph_loop_down.make_scc();
 
   var graph_loop_left = new graph();
   graph_loop_left.adj_array = graph_loop_left.make_adj_array("left");
   graph_loop_left.adj_list = graph_loop_left.make_adj_list(graph_loop_left.adj_array);
   graph_loop_left.rev_adj_list = graph_loop_left.make_rev_adj_list(graph_loop_left.adj_list);
-  if(!graph_loop_left.valid) return "detector cannot work in this page due to iframes"
+  if(!graph_loop_left.valid) return -1
   graph_loop_left.make_scc();
 
   
@@ -36,7 +36,7 @@ function loop_detector(){
   graph_loop_right.adj_array = graph_loop_right.make_adj_array("right");
   graph_loop_right.adj_list = graph_loop_right.make_adj_list(graph_loop_right.adj_array);
   graph_loop_right.rev_adj_list = graph_loop_right.make_rev_adj_list(graph_loop_right.adj_list);
-  if(!graph_loop_right.valid) return "detector cannot work in this page due to iframes"
+  if(!graph_loop_right.valid) return -1
   graph_loop_right.make_scc();
 
   return [graph_loop_up.detect_loop(), graph_loop_down.detect_loop(), graph_loop_left.detect_loop(), graph_loop_right.detect_loop()];
@@ -47,7 +47,7 @@ function unreachable_detector(){
   graph_unreachable.adj_array = graph_unreachable.make_adj_array("all");
   graph_unreachable.adj_list = graph_unreachable.make_adj_list(graph_unreachable.adj_array);
   graph_unreachable.rev_adj_list = graph_unreachable.make_rev_adj_list(graph_unreachable.adj_list);
-  if(!graph_unreachable.valid) return "detector cannot work in this page due to iframes"
+  if(!graph_unreachable.valid) return -1;
   graph_unreachable.make_scc();
   graph_unreachable.make_rev_scc(graph_unreachable.scc);
   return graph_unreachable.detect_unreachable();
@@ -56,7 +56,7 @@ function unreachable_detector(){
 function isolation_detector(){
   var graph_isolation = new graph();
   graph_isolation.adj_array = graph_isolation.make_adj_array("all");
-  if(!graph_isolation.valid) return "detector cannot work in this page due to iframes"
+  if(!graph_isolation.valid) return -1
   graph_isolation.adj_list = graph_isolation.make_adj_list(graph_isolation.adj_array);
   graph_isolation.rev_adj_list = graph_isolation.make_rev_adj_list(graph_isolation.adj_list);
   graph_isolation.make_scc();
@@ -77,13 +77,14 @@ function focus_error_detector(){
       var outline_color = getComputedStyle(focusable[i]).outlineColor;
       var border_color = getComputedStyle(focusable[i]).borderColor;
       var background_color = getComputedStyle(focusable[i]).backgroundColor;
-
+      
       focusable[i].focus();
       var focused_outline_color = getComputedStyle(focusable[i]).outlineColor;
       var focused_outline_width = getComputedStyle(focusable[i]).outlineWidth;
       var focused_outline_style = getComputedStyle(focusable[i]).outlineStyle;
       if(rgb_distance(outline_color, focused_outline_color) <= 96){
         result.push(focusable[i]);
+       // document.body.aaaa = "hello world";
       }
       else if(rgb_distance(border_color, focused_outline_color) <= 96){
         result.push(focusable[i]);
@@ -98,16 +99,17 @@ function focus_error_detector(){
         result.push(focusable[i]);
       }
     }
-    // var gridWrapper = document.querySelector('.content');
-    // var contents = "";
-    // var itemName = "Focus Error elements";
-    // for (i = 0; i < result[0].length; i++){
-    //   contents += "<xmp>\""+result[0][i] + "\"</xmp><br>";
-    // }
-    // var text = "<h2>"+itemName+"</h2>"+ contents;
+    var contents = "";
 
-    // gridWrapper.innerHTML = '<ul class="products">' + text + '<ul>';
-    console.log(result);
+    for (i = 0; i < result.length; i++){
+      contents += "<xmp>\""+result[i].outerHTML + "\"</xmp><br>";
+    }
+
+    document.body.foucus_error_result = contents;
+
+
+    console.log("result", result);
+    console.log("content", contents);
   }, 2000); 
   return result;
 }

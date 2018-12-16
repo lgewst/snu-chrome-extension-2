@@ -33,6 +33,7 @@
 			closeMenu();
 			gridWrapper.innerHTML = '';
 			classie.add(gridWrapper, 'content--loading');
+
 			setTimeout(function() {
 				String.prototype.replaceAll = function(org, dest) {
 				return this.split(org).join(dest);
@@ -48,20 +49,34 @@
 					//alert(detector_file_path);
 					chrome.tabs.executeScript({ file: detector_file_path}, 
 							    function(result){
+								
+								var contents = "";
+								if(result < 0){ contents = "iframe error!"}
+								else{
+							    	for (i = 0; i < result[0].length; i++)
+									{
+									contents += "<xmp>\""+result[0][i] + "\"</xmp><br>";
+									}
+								}
+									dummyData[itemName] = "<h2>"+itemName+"</h2>"+ contents;
+									classie.remove(gridWrapper, 'content--loading');
+									gridWrapper.innerHTML = '<ul class="products">' + dummyData[itemName] + '<ul>';
 
-							    var contents = "";
-
-							    for (i = 0; i < result[0].length; i++)
-							    {
-							    contents += "<xmp>\""+result[0][i] + "\"</xmp><br>";
-							    }
-	
-							    dummyData[itemName] = "<h2>"+itemName+"</h2>"+ contents;
-							    classie.remove(gridWrapper, 'content--loading');
-							    gridWrapper.innerHTML = '<ul class="products">' + dummyData[itemName] + '<ul>';
-
-							    }
+								}
+								
 						);
 			 	}
 			}, 700);
+
+			if(itemName == "Focus Error elements"){
+						setTimeout(function(){
+						chrome.tabs.executeScript({code: "document.body.foucus_error_result"}, function(result){
+								alert(result);
+								dummyData[itemName] = "<h2>"+itemName+"</h2>"+ result;
+								gridWrapper.innerHTML = '<ul class="products">' + dummyData[itemName] + '<ul>';
+								
+						})
+					},5000)
+			}
+
 		}
