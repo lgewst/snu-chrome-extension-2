@@ -68,7 +68,6 @@
 			if(itemName == "Focus Error elements"){
 						setTimeout(function(){
 						chrome.tabs.executeScript({code: "document.body.foucus_error_result"}, function(result){
-								alert(result);
 								dummyData[itemName] = "<h2>"+itemName+"</h2>"+ result;
 								gridWrapper.innerHTML = '<ul class="products">' + dummyData[itemName] + '<ul>';
 								

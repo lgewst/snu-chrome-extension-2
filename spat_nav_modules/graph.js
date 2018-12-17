@@ -132,7 +132,6 @@ graph.prototype.make_rev_adj_list = function(directed_graph){
     for(var j = 1; j < directed_graph[i].length; j++){
       if(directed_graph[i][j].node_id == undefined){
         this.valid = false;
-        console.log(i, j, directed_graph);
         return;
       }
       reversed_graph_list[directed_graph[i][j].node_id].push(directed_graph[i][0]); //push elements into rev_graph.
@@ -257,6 +256,7 @@ graph.prototype.detect_trap = function(){
     }
   }
   return result;
+  console.log(this.result); 
 }
 
 graph.prototype.detect_loop = function(){
@@ -310,5 +310,6 @@ graph.prototype.detect_isolation = function(){
       }
     }
   }
+  console.log(this.result);
   return result;
 }

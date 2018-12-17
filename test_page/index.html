@@ -11,18 +11,6 @@
   <script src="../spatnav-heuristic.js"></script>
   <script type="text/javascript">
     window.addEventListener("load", function() {
-      function focus_error_detector(){
-        var focusable = document.body.focusableAreas({'mode': 'all'});
-        console.log(focusable);
-        focusable[30].focus();
-        console.log(getComputedStyle(focusable[30]).getPropertyValue('outline').trim());
-        
-        let clearFocusRing = document.getElementsByClassName('small-box3');
-        console.log(clearFocusRing);
-        clearFocusRing[0].focus();
-        console.log(getComputedStyle(clearFocusRing[0]).getPropertyValue(`outline`).trim());
-      }
-      focus_error_detector()
       let loopingBox1 = document.getElementById('looping-first');
       let loopingBox3 = document.getElementById('looping-third');
 
@@ -111,9 +99,9 @@
       <h2 tabIndex="0" id="intro">5. Unclear Focus ring</h2>
       <div class="small-box2" tabindex="0">Error 1</div>
       <br><br>
-      <div class="small-box" tabindex="0" style="background: black; color:white;">Error 2</div>
+      <div class="small-box" tabindex="0" style="background: black; color:white;">OK</div>
       <br><br>
-      <div class="small-box" tabindex="0" style="background: blue; color:white;">Error 3</div>
+      <div class="small-box" tabindex="0" style="background: blue; color:white;">Error 2</div>
       <br><br>
       <div class="small-box3" tabindex="0">OK</div>
     </div>

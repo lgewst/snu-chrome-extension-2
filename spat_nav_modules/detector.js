@@ -106,10 +106,7 @@ function focus_error_detector(){
     }
 
     document.body.foucus_error_result = contents;
-
-
     console.log("result", result);
-    console.log("content", contents);
   }, 2000); 
   return result;
 }
@@ -140,6 +137,7 @@ function rgb_distance(rgb1, rgb2){
   *
   */
 function non_focusable_button_detector(){
+  console.log("non focusable button");
   var element = document.body.getElementsByTagName("*");
   var result = [];
   for (var i = 0; i < element.length; i++){
@@ -158,6 +156,7 @@ function non_focusable_button_detector(){
   *
   */
 function fixed_sticky_detector(){ 
+  console.log("fixed and sticky element");
   var element = document.body.getElementsByTagName("*");
   var result = [];
   for (var i = 0; i < element.length; i++){
@@ -174,6 +173,7 @@ function fixed_sticky_detector(){
   *
   */
 function iframe_detector(){
+  console.log("iframe");
   var result = document.body.getElementsByTagName("iframe");
   console.log(result);
   return result;
