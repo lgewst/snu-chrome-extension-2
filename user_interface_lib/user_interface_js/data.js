@@ -12,7 +12,7 @@ Data["What is Loop element"] =
 
 Data["What is Isolation element"] = ""
 Data["What is Focus Error element"] = ""
-Data["What is Iframe Error lement"] = ""
+Data["What is Iframe Error element"] = ""
 Data["What is Non Focussable element"] = ""
 Data["What is Fixed Sticky element"] = ""
 
