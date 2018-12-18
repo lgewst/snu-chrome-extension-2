@@ -1,4 +1,4 @@
-
+/* This detector.js contains codes of detecting Spat-Nav Errors. */
 function trap_detector(){
   var graph_trap = new graph();
   graph_trap.adj_array = graph_trap.make_adj_array("all");

@@ -1,3 +1,6 @@
+/* graph.js contains codes which is necessary for generating graph data structures and SCC elements
+which are necessary for detectors. */
+
 function graph(){
   this.focusable =[];
   this.adj_array = this.make_adj_array();
