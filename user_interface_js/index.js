@@ -45,7 +45,7 @@
 					gridWrapper.innerHTML = '<ul class="products">' + dummyData[itemName] + '<ul>';
 				} else {
 					var detector = itemName.replaceAll(" ","_").toLowerCase();
-					var detector_file_path = "spat_nav_modules/"+detector+"_detector.js";
+					var detector_file_path = "detector_js/"+detector+"_detector.js";
 					//alert(detector_file_path);
 					chrome.tabs.executeScript({ file: detector_file_path}, 
 							    function(result){
