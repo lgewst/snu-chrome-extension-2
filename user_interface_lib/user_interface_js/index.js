@@ -40,9 +40,9 @@
 				}
 
 				var tmp;
-				if (itemName in dummyData){
+				if (itemName in Data){
 					classie.remove(gridWrapper, 'content--loading');
-					gridWrapper.innerHTML = '<ul class="products">' + dummyData[itemName] + '<ul>';
+					gridWrapper.innerHTML = '<ul class="products">' + Data[itemName] + '<ul>';
 				} else {
 					var detector = itemName.replaceAll(" ","_").toLowerCase();
 					var detector_file_path = "detector_js/"+detector+"_detector.js";
@@ -56,9 +56,9 @@
 							    	for (i = 0; i < result[0].length; i++)
 									{contents += "<xmp>"+result[0][i] + "</xmp><br>";}
 								}
-									dummyData[itemName] = "<h2>"+itemName+"</h2>"+ contents;
+									Data[itemName] = "<h2>"+itemName+"</h2>"+ contents;
 									classie.remove(gridWrapper, 'content--loading');
-									gridWrapper.innerHTML = '<ul class="products">' + dummyData[itemName] + '<ul>';
+									gridWrapper.innerHTML = '<ul class="products">' + Data[itemName] + '<ul>';
 								}
 								
 						);
@@ -68,8 +68,8 @@
 			if(itemName == "Focus Error elements"){
 						setTimeout(function(){
 						chrome.tabs.executeScript({code: "document.body.foucus_error_result"}, function(result){
-								dummyData[itemName] = "<h2>"+itemName+"</h2>"+ result;
-								gridWrapper.innerHTML = '<ul class="products">' + dummyData[itemName] + '<ul>';
+								Data[itemName] = "<h2>"+itemName+"</h2>"+ result;
+								gridWrapper.innerHTML = '<ul class="products">' + Data[itemName] + '<ul>';
 								
 						})
 					},5000)
