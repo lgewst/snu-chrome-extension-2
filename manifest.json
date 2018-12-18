@@ -4,10 +4,6 @@
     "description": "evaluator for spatial navagiation",
     "version": "2.0",
     "devtools_page": "devtools.html",
-    "background": {
-       "scripts": ["background.js"],
-       "persistent": false
-    },
     "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*", "file:///*"],
