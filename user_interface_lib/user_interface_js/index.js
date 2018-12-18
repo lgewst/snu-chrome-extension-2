@@ -49,17 +49,19 @@
 					//alert(detector_file_path);
 					chrome.tabs.executeScript({ file: detector_file_path}, 
 							    function(result){
-								
+								try{
 								var contents = "";
 								if(result < 0){ contents = "iframe error!"}
 								else{
-							    	for (i = 0; i < result[0].length; i++)
-									{contents += "<xmp>"+result[0][i] + "</xmp><br>";}
+
+								    	for (i = 0; i < result[0].length; i++)
+										{contents += "<xmp>"+result[0][i] + "</xmp><br>";}
 								}
-									Data[itemName] = "<h2>"+itemName+"</h2>"+ contents;
-									classie.remove(gridWrapper, 'content--loading');
-									gridWrapper.innerHTML = '<ul class="products">' + Data[itemName] + '<ul>';
-								}
+								Data[itemName] = "<h2>"+itemName+"</h2>"+ contents;
+								classie.remove(gridWrapper, 'content--loading');
+								} catch(e){ Data[itemName] = "<h1> Please load the page completey and turn on the Spat-Nav Accessibility Evaluator. </h1>" } 
+								gridWrapper.innerHTML = '<ul class="products">' + Data[itemName] + '<ul>';
+							   }
 								
 						);
 			 	}
