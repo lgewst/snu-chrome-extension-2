@@ -69,10 +69,11 @@ graph.prototype.make_adj_array = function(direction){
  *
  */
 graph.prototype.remove_redundancy_in_array = function(input_array){
-  var output_array = [];
-  $.each(input_array, function(i, el){
-    if($.inArray(el, output_array) === -1) output_array.push(el);
-});
+
+  var output_array = input_array.filter(function(item, pos) {
+    return input_array.indexOf(item) == pos;
+    })
+
   var filtered_output_array = output_array.filter(function (el) {
   return el != null;
   });
@@ -94,8 +95,6 @@ graph.prototype.remove_redundancy_in_array = function(input_array){
  // that can be represented with a pair of two nodes (from, to)
  // which is not related to arrow keys direction.
 
- // To use this function the html code should import JQuery as below.
- // <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 graph.prototype.make_adj_list = function(arrow_graph){
 
   var directed_graph = [];
