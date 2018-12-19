@@ -2,9 +2,9 @@
 
 ## How to install
 1. `git clone https://github.com/lgewst/snu-chrome-extension-2.git`.
-1. Using chrome, navigate to chrome://extension.
-1. Turn on the Developer mode.
-1. click LOAD UNPACKED and select the extension folder.
+1. Navigate to `chrome://extension`.
+1. Switch on the developer mode.
+1. Click `LOAD UNPACKED` and select the extension folder.
 
 ## SCC (Strongly Connected Component)
 1. 같은 SCC 내에 속하는 임의의 서로 다른 두 정점은 서로 도달 가능합니다.
