@@ -1,7 +1,7 @@
 # snu-chrome-extension-2
 
 ## How to install
-1. Clone the repository git clone https://github.com/lgewst/snu-chrome-extension-1.git.
+1. Clone the repository git clone https://github.com/lgewst/snu-chrome-extension-2.git.
 1. Using chrome, navigate to chrome://extension.
 1. Turn on the Developer mode.
 1. click LOAD UNPACKED and select the extension folder.
