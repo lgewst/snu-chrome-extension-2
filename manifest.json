@@ -4,15 +4,13 @@
     "description": "evaluator for spatial navagiation",
     "version": "2.0",
     "devtools_page": "devtools.html",
-    "content_scripts": [
-    {
-      "matches": ["http://*/*", "https://*/*", "file:///*"],
-      "js": ["spatnav-heuristic.js","detector_js/graph.js","detector_js/detector.js"],
-      "run_at": "document_end",
-      "all_frames": true
-    }
-     ],
+    "content_scripts": [{
+        "matches": ["http://*/*", "https://*/*", "file:///*"],
+        "js": ["spatnav-heuristic.js", "detector_js/graph.js", "detector_js/detector.js"],
+        "run_at": "document_end",
+        "all_frames": true
+    }],
     "permissions": [
-"*://*/*", "activeTab",  "tabs", "http://*/*", "https://*/*", "file:///*", "storage"
+        "*://*/*", "activeTab", "tabs", "http://*/*", "https://*/*", "file:///*", "storage"
     ]
-  }
+}
