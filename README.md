@@ -38,5 +38,5 @@
 
 ## UI templete.
 ### License
-- http://tympanus.net/codrops/licensing/
+- http://tympanus.net/codrops/licensing.
 Thanks to tympanus for the templete!
