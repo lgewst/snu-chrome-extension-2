@@ -1,18 +1,22 @@
 var Data = [];
 
 Data["What is unreachable element"] =
-        "<h1>Unreachable elements</h1><br> <p>Unreachable elements are the elements in this webpage which is not able to be reached with spatial Navigation Search.</p>"
+        "<h1>Unreachable elements</h1><br> <p>Unreachable element는 키보드를 가지고 해당 element에 접근할 수 없는 요소입니다. </p>"
 
 
 Data["What is Trap element"] =
-        "<h1>Trap elements</h1><br> <p>topological order로 정렬된 SCC에서, 나가는 방향의 edge가 없는 SCC는 trap으로 간주 할 수 있다. 테스트 페이지에서 잘 작동하는 것으로 보인다. SCC가 하나인 경우에도(즉, 현재 보이는 element들이 전부 하나의 trap으로 탐지) highlight되게 설정해놓았>으며, UI를 만들고 난 뒤에는 SCC가 둘 이상인 경우에만 작동하도록 할 예정.`trapped.html`의 경우 `'visible'`모드인 경우 SCC가 하나라고 탐지하여highlight되는 경우이며, `'all'` 인 경우는 기대한대로 작동하여 trap을 탐지한다.</p>"
+        "<h1>Trap elements</h1><br> <p>Trap element는 해당 element group에 포커스가 갔을 때, 그 그룹의 element를 제외한 element들에 접근할 수 없게되는 요소입니다. </p>"
 
 Data["What is Loop element"] =
-        "<h1>Loop elements</h1><br> <p>focusable element의 directed graph를 만들 때, 한 방향키의 input만 있다고 가정하고 `{up,down,left,right}4가지 graph로 SCC를 만든다. 각 노드의 edge가 최대 하나인 경우에 SCC의 구성 요소가 2개 이상인 경우 해당 SCC에서 다른 SCC로 나가는 edge는 존재 할 수 없으며, 따라서 해당 SCC는 loop라고 할 수 있다. 실제로 loop가 있는 경우는 탐지가능하다고 추정 중이나 실제 케이스가 없어서 확인은 못>한 상태. test page처럼 다이나믹하게 변하는 경우는 탐지 불가능 한 상태.</p>"
+        "<h1>Loop elements</h1><br> <p>Loop element는 해당 element에서 한 방향키를 계속해서 눌렀을 때 다시 해당 element로 포커스가 돌아오는 요소입니다. </p>"
 
-Data["What is Isolation element"] = ""
-Data["What is Focus Error element"] = ""
-Data["What is Iframe Error element"] = ""
-Data["What is Non Focussable element"] = ""
-Data["What is Fixed Sticky element"] = ""
+Data["What is Isolation element"] = "Isolation element는 고립되어 있는 element로써, 키보드로는 해당 element에 접근할수도 없고, 우연히 접근한 상태에서도 다른 element로 갈 수 없는 요소입니다."
+
+Data["What is Focus Error element"] = "Focus error element는 해당 요소에 focus가 갔을 때, 사용자가 focus ring을 인지하기 힘든 요소입니다."
+
+Data["What is Iframe Error element"] = "Iframe element는 Html안의 Html로써, 해당 요소가 있을 때 Spat_nav의 작동이 잘 안될 수 있습니다."
+
+Data["What is Non Focusable element"] = "해당 element는 마우스로 클릭시에 이벤트가 발생하지만, 키보드로는 focus를 받을 수 없는 요소입니다."
+
+Data["What is Fixed Sticky element"] = "이 요소들은 focusable element들 간의 상대위치를 변화시켜서 Spat_nav의 작동에 혼란을 줍니다."
 

@@ -238,11 +238,8 @@ graph.prototype.condensation = function(){
         if(this.adj_list[o_node].scc_id != this.adj_list[node.node_id].scc_id) tmp.push(this.adj_list[o_node].scc_id);
       }
     }
-    var tmp2 = this.scc[i][0];
-    $.each(tmp, function(key, value){
-      if($.inArray(value, tmp2) === -1) {
-        tmp2.push(value);
-      }
+    this.scc[i][0] = tmp.filter(function(item, pos){
+      return tmp.indexOf(item) == pos;
     })
   }
 }
