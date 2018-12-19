@@ -28,7 +28,7 @@
 ## Other detectors
 ### focus_error_detector
 - Focus error element는 해당 요소에 focus가 갔을 때, 사용자가 focus ring을 인지하기 힘든 요소입니다.
-- Focus ring과 backround의 RGB색상거리, Focus ring의 width, style을 검사합니다.
+- Focus ring과 background의 RGB색상거리, Focus ring의 width, style을 검사합니다.
 ### non_focusable_button_detector
 - Iframe element는 Html안의 Html로써, 해당 요소가 있을 때 Spat_nav의 작동이 잘 안될 수 있습니다.
 ### fixed_sticky_detector
