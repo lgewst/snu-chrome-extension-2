@@ -52,8 +52,11 @@ function loadDummyData(ev, itemName) {
                 function(result) {
                     try {
                         var contents = "";
-                        if (result < 0) {
-                            contents = "iframe error!"
+                        if (result == -2) {
+                            contents = "due to too many elements,    detector cannot work   T.T"
+                        }
+                        if (result == -1) {
+                            contents = "due to iframes, detector cannot work"
                         } else {
                             for (i = 0; i < result[0].length; i++) {
                                 contents += "<xmp>" + result[0][i] + "</xmp><br>";

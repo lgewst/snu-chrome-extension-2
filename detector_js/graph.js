@@ -44,6 +44,10 @@ graph.prototype.make_adj_array = function(direction) {
     var graph = new Array(this.node_num);
     var dir = ["up", "down", "left", "right"];
 
+    if(this.node_num >= 60){
+        this.valid = -2
+        return graph;
+    }
     if (direction == "all") { // direction == 0 means all directions
         for (var i = 0; i < this.node_num; i++) {
             this.focusable[i].node_id = i // assign node_id to focusable elements.

@@ -2,6 +2,7 @@
 function trap_detector() {
     var graph_trap = new graph();
     graph_trap.adj_array = graph_trap.make_adj_array("all");
+    if (graph_trap.valid == -2) return -2;
     graph_trap.adj_list = graph_trap.make_adj_list(graph_trap.adj_array);
     graph_trap.rev_adj_list = graph_trap.make_rev_adj_list(graph_trap.adj_list);
     if (!graph_trap.valid) return -1;
@@ -12,6 +13,7 @@ function trap_detector() {
 function loop_detector() {
     var graph_loop_up = new graph();
     graph_loop_up.adj_array = graph_loop_up.make_adj_array("up");
+    if (graph_loop_up.valid == -2) return -2;
     graph_loop_up.adj_list = graph_loop_up.make_adj_list(graph_loop_up.adj_array);
     graph_loop_up.rev_adj_list = graph_loop_up.make_rev_adj_list(graph_loop_up.adj_list);
     if (!graph_loop_up.valid) return -1
@@ -19,6 +21,7 @@ function loop_detector() {
 
     var graph_loop_down = new graph();
     graph_loop_down.adj_array = graph_loop_down.make_adj_array("down");
+    if (graph_loop_down.valid == -2) return -2;
     graph_loop_down.adj_list = graph_loop_down.make_adj_list(graph_loop_down.adj_array);
     graph_loop_down.rev_adj_list = graph_loop_down.make_rev_adj_list(graph_loop_down.adj_list);
     if (!graph_loop_down.valid) return -1
@@ -26,6 +29,7 @@ function loop_detector() {
 
     var graph_loop_left = new graph();
     graph_loop_left.adj_array = graph_loop_left.make_adj_array("left");
+    if (graph_loop_left.valid == -2) return -2;
     graph_loop_left.adj_list = graph_loop_left.make_adj_list(graph_loop_left.adj_array);
     graph_loop_left.rev_adj_list = graph_loop_left.make_rev_adj_list(graph_loop_left.adj_list);
     if (!graph_loop_left.valid) return -1
@@ -34,6 +38,7 @@ function loop_detector() {
 
     var graph_loop_right = new graph();
     graph_loop_right.adj_array = graph_loop_right.make_adj_array("right");
+    if (graph_loop_right.valid == -2) return -2;
     graph_loop_right.adj_list = graph_loop_right.make_adj_list(graph_loop_right.adj_array);
     graph_loop_right.rev_adj_list = graph_loop_right.make_rev_adj_list(graph_loop_right.adj_list);
     if (!graph_loop_right.valid) return -1
@@ -45,6 +50,7 @@ function loop_detector() {
 function unreachable_detector() {
     var graph_unreachable = new graph();
     graph_unreachable.adj_array = graph_unreachable.make_adj_array("all");
+    if (graph_unreachable.valid == -2) return -2;
     graph_unreachable.adj_list = graph_unreachable.make_adj_list(graph_unreachable.adj_array);
     graph_unreachable.rev_adj_list = graph_unreachable.make_rev_adj_list(graph_unreachable.adj_list);
     if (!graph_unreachable.valid) return -1;
@@ -56,6 +62,7 @@ function unreachable_detector() {
 function isolation_detector() {
     var graph_isolation = new graph();
     graph_isolation.adj_array = graph_isolation.make_adj_array("all");
+    if (graph_isolation.valid == -2) return -2;
     if (!graph_isolation.valid) return -1
     graph_isolation.adj_list = graph_isolation.make_adj_list(graph_isolation.adj_array);
     graph_isolation.rev_adj_list = graph_isolation.make_rev_adj_list(graph_isolation.adj_list);
@@ -86,7 +93,6 @@ function focus_error_detector() {
             var focused_outline_style = getComputedStyle(focusable[i]).outlineStyle;
             if (rgb_distance(outline_color, focused_outline_color) <= 96) {
                 result.push(focusable[i]);
-                // document.body.aaaa = "hello world";
             } else if (rgb_distance(border_color, focused_outline_color) <= 96) {
                 result.push(focusable[i]);
             } else if (rgb_distance(background_color, focused_outline_color) <= 96) {
